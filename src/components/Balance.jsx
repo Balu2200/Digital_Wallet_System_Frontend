@@ -1,8 +1,8 @@
 
 
-const Balance = () => {
+const Balance = ({value}) => {
   return (
-    <div>Balance</div>
+    <div>{value}</div>
   )
 }
 
