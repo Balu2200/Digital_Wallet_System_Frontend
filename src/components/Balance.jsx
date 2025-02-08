@@ -2,7 +2,7 @@
 
 const Balance = ({value}) => {
   return (
-    <div>{value}</div>
+    <div className="p-2 font-medium ">Current Balance : Rs.{value}</div>
   )
 }
 

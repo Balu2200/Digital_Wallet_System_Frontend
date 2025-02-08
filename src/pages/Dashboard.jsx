@@ -4,14 +4,16 @@ import Balance from "../components/Balance";
 
 const Dashboard= () => {
   return (
-    <div>
-      <Appbar/>
+    <div className="bg-green-100">
+      <Appbar />
       <div>
-        <Balance value={"10,1000"}/>
-        <User/>
+        <div className="bg-cyan-100 py-1 ">
+          <Balance value={"10,000"} />
+        </div>
+        <User />
       </div>
     </div>
-  )
+  );
 }
 
 export default Dashboard;
