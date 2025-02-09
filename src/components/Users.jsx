@@ -57,7 +57,7 @@ const Users = () => {
           type="text"
           placeholder="Search users..."
           onChange={(e) => setFilter(e.target.value)}
-          className="w-1/2 mx-72 px-4 mx-3 py-1 border rounded-xl h-12 border-slate-200"
+          className="w-1/2 mx-96 px-4 mx-3 py-1 border rounded-xl h-12 border-slate-200"
         />
       </div>
       <div>

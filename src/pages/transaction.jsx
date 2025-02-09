@@ -7,6 +7,8 @@ import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 
 const Transaction = () => {
+
+  
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const toname = searchParams.get("to");

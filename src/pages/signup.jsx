@@ -16,6 +16,24 @@ const signup = () => {
   const[lastName, setlastName] = useState('');
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
+  const[statusMessage, setStatusMessage] = useState('');
+
+  const handleSignup = async () => {
+    setStatusMessage("");
+    try {
+      await axios.post(
+        BASE_URL + "/signup",
+        { firstName, lastName, email, password },
+        { withCredentials: true }
+      );
+      setStatusMessage("Signup successful! Redirecting...");
+      setTimeout(() => navigate("/login"), 1500);
+    } catch (error) {
+      setStatusMessage(
+        error.response?.data?.message || "Signup failed. Try again."
+      );
+    }
+  };
 
   return (
     <div className="bg-slate-400 h-screen flex justify-center">
@@ -52,13 +70,13 @@ const signup = () => {
             label={"Password"}
           />
           <div>
-            <Button onClick={() =>{axios.post(BASE_URL+"/signup",{
-              firstName,
-              lastName,
-              email,
-              password
-            }), navigate("/login") }} label={"Submit"} />
+            <Button onClick={handleSignup} label={"Submit"} />
           </div>
+          {statusMessage && (
+            <div className="mt-2 text-sm font-medium text-indigo-500">
+              {statusMessage}
+            </div>
+          )}
           <div className="p-2 flex">
             <Bottomwarning
               label={"Already have account?"}
