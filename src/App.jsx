@@ -6,6 +6,7 @@ import Transaction from "./pages/Transaction";
 import Body from "./pages/Body";
 import { UserContextProvider } from "./utils/Usercontext";
 import Addbalance from "./pages/addbalance";
+import TransactionHistory from "./pages/transactionsHistory";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="transfer" element={<Transaction />} />
             <Route path="addbalance" element={<Addbalance />} />
+            <Route path="history" element={<TransactionHistory />} />
           </Route>
         </Routes>
       </BrowserRouter>

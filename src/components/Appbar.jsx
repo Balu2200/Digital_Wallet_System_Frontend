@@ -6,7 +6,7 @@ const Appbar = () => {
   const { user, removeUser } = useUser();
   const navigate = useNavigate();
 
-  const handleButtonClick = () => {
+  const handleLogout = () => {
     if (user) {
       removeUser();
       navigate("/login");
@@ -15,21 +15,24 @@ const Appbar = () => {
     }
   };
 
+  const goToTransactions = () => {
+    navigate("/history"); 
+  };
+
   return (
     <div className="shadow-xl h-16 flex justify-between rounded-lg bg-cyan-300">
       <div className="flex flex-col justify-center h-full mr-4 font-bold mx-2 p-2">
         PayTM App
       </div>
+
       <div className="flex items-center p-3 space-x-4">
+        <Button onClick={goToTransactions} label={"History"} />
         {user === null ? (
-          <span>Loading...</span> 
+          <span>Loading...</span>
         ) : (
           <>
             {user && <h1 className="font-semibold">{user.firstName}</h1>}
-            <Button
-              onClick={handleButtonClick}
-              label={user ? "Logout" : "Login"}
-            />
+            <Button onClick={handleLogout} label={user ? "Logout" : "Login"} />
           </>
         )}
       </div>
