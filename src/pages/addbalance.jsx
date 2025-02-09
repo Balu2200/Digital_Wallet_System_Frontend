@@ -18,7 +18,6 @@ const Addbalance = () => {
     if (!amount || isNaN(transferAmount) || transferAmount <= 0) {
       setStatusMessage("Please enter a valid amount greater than 0.");
       setIsError(true);
-      clearStatusMessage();
       return;
     }
 
@@ -31,25 +30,12 @@ const Addbalance = () => {
 
       setStatusMessage("Balance updated successfully!");
       setIsError(false);
-      setAmount("");
-
-      setTimeout(() => {
-        setStatusMessage("");
-        navigate("/dashboard");
-      }, 3000);
-      
+      setAmount(""); 
     } catch (err) {
       console.error("Balance update failed:", err);
       setStatusMessage("Balance not updated!");
       setIsError(true);
-      clearStatusMessage();
     }
-  };
-
-  const clearStatusMessage = () => {
-    setTimeout(() => {
-      setStatusMessage("");
-    }, 3000);
   };
 
   return (
@@ -75,6 +61,14 @@ const Addbalance = () => {
                 {statusMessage}
               </div>
             )}
+            <div className="pt-4">
+              <button
+                onClick={() => navigate("/dashboard")}
+                className="text-blue-500 underline font-semibold"
+              >
+                Go to Dashboard
+              </button>
+            </div>
           </div>
         </div>
       </div>
