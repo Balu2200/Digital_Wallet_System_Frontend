@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Signup from "./pages/Signup";
+import Signup from "./pages/signup";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import Transaction from "./pages/Transaction";
+import Transaction from "./pages/transaction";
 import Body from "./pages/Body";
 import { UserContextProvider } from "./utils/Usercontext";
 import Addbalance from "./pages/addbalance";
