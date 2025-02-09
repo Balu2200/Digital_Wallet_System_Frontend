@@ -1,23 +1,15 @@
-import { useState, useEffect } from "react";
 import { useUser } from "../utils/Usercontext";
 import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../utils/constants";
-import axios from "axios";
 
 const Appbar = () => {
   const { user, removeUser } = useUser();
   const navigate = useNavigate();
 
-  const handleButtonClick = async () => {
+  const handleButtonClick = () => {
     if (user) {
-      try {
-        await axios.post(`${BASE_URL}/logout`, {}, { withCredentials: true }); 
-        removeUser(); 
-        navigate("/login");
-      } catch (error) {
-        console.error("Logout failed:", error);
-      }
+      removeUser();
+      navigate("/login");
     } else {
       navigate("/login");
     }
@@ -29,8 +21,17 @@ const Appbar = () => {
         PayTM App
       </div>
       <div className="flex items-center p-3 space-x-4">
-        {user && <h1 className="font-semibold">{user.firstName}</h1>}
-        <Button onClick={handleButtonClick} label={user ? "Logout" : "Login"} />
+        {user === null ? (
+          <span>Loading...</span> 
+        ) : (
+          <>
+            {user && <h1 className="font-semibold">{user.firstName}</h1>}
+            <Button
+              onClick={handleButtonClick}
+              label={user ? "Logout" : "Login"}
+            />
+          </>
+        )}
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ const Users = () => {
   const fetchUsers = async (userId, searchFilter) => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/profile/bulk?filter=${searchFilter}`
+        `${BASE_URL}/profile/bulk?filter=${searchFilter}`,{withCredentials:true}
       );
       const allUsers = Array.isArray(response.data.users)
         ? response.data.users
