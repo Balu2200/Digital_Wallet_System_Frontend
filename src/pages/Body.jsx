@@ -34,7 +34,7 @@ const Body = () => {
     <div>
       <Appbar />
       <Outlet />
-      <Footer />
+      
     </div>
   );
 };

@@ -20,21 +20,32 @@ const Appbar = () => {
   };
 
   return (
-    <div className="shadow-xl h-16 flex justify-between rounded-lg bg-cyan-300">
-      <div className="flex flex-col justify-center h-full mr-4 font-bold mx-2 p-2">
-        PayTM App
+    <div className="shadow-xl h-16 flex justify-between items-center rounded-lg bg-cyan-500 px-6">
+      <div className="flex bg-indigo-600 items-center text-2xl font-bold text-black p-2 shadow-lg rounded-lg">
+        PaySwift
       </div>
 
-      <div className="flex items-center p-3 space-x-4">
+      <div className="flex items-center space-x-6">
+      
+        <Button onClick={() => navigate("/dashboard")} label={"Dashboard"} />
         <Button onClick={goToTransactions} label={"History"} />
-        {user === null ? (
-          <span>Loading...</span>
-        ) : (
-          <>
-            {user && <h1 className="font-semibold">{user.firstName}</h1>}
-            <Button onClick={handleLogout} label={user ? "Logout" : "Login"} />
-          </>
-        )}
+        <div className="flex items-center space-x-4">
+          {user === null ? (
+            <span className="text-white">Loading...</span>
+          ) : (
+            <>
+              {user && (
+                <h1 className="font-semibold text-white">
+                  Welcome, {user.firstName}
+                </h1>
+              )}
+              <Button
+                onClick={handleLogout}
+                label={user ? "Logout" : "Login"}
+              />
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

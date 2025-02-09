@@ -16,7 +16,7 @@ const TransactionHistory = () => {
           params: { page, limit },
           withCredentials: true,
         });
-        setTransactions(response.data.transactions);
+        setTransactions(response.data.transactions);  
       } catch (err) {
         setError("Failed to fetch transactions");
         console.error(err);
@@ -41,10 +41,11 @@ const TransactionHistory = () => {
       ) : transactions.length === 0 ? (
         <p>No transactions found.</p>
       ) : (
-        <table className="w-full border-collapse border border-gray-300">
+        <table className="w-full  border-collapse border border-gray-300">
           <thead>
             <tr className="bg-gray-200">
               <th className="border p-2">Receiver</th>
+              <th className="border p-2">Sender</th>
               <th className="border p-2">Date</th>
               <th className="border p-2">Amount (Rs.)</th>
               <th className="border p-2">Status</th>
@@ -54,6 +55,7 @@ const TransactionHistory = () => {
             {transactions.map((txn) => (
               <tr key={txn._id} className="text-center">
                 <td className="border p-2">{txn.receiverName}</td>
+                <td className="border p-2">{txn.senderName}</td>
                 <td className="border p-2">
                   {new Date(txn.timestamp).toLocaleDateString()}
                 </td>

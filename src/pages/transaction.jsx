@@ -1,19 +1,18 @@
+import { useState } from "react";
 import Headingtitle from "../components/Headingtitle";
 import { Button } from "../components/Button";
 import InputBox from "../components/InputBox";
-import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 
 const Transaction = () => {
-
-  
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const toname = searchParams.get("to");
 
   const [amount, setAmount] = useState("");
+  const [statusMessage, setStatusMessage] = useState(null);
 
   const handleTransfer = () => {
     const transferAmount = Number(amount);
@@ -26,23 +25,23 @@ const Transaction = () => {
     axios
       .post(
         `${BASE_URL}/account/transfer`,
-        {
-          to: id,
-          amount: transferAmount,
-        },
+        { to: id, amount: transferAmount },
         { withCredentials: true }
       )
       .then((response) => {
-        alert("Transfer Successful!");
+        setStatusMessage({ text: "Transfer Successful!", type: "success" });
+        setAmount(""); 
       })
       .catch((error) => {
-        alert(
-          "Transfer Failed: " + (error.response?.data?.message || error.message)
-        );
+        setStatusMessage({
+          text:
+            "Transfer Failed: " +
+            (error.response?.data?.message || error.message),
+          type: "error",
+        });
+        setAmount(""); 
       });
   };
-
-
 
   return (
     <div className="bg-slate-400 h-screen flex justify-center">
@@ -61,6 +60,7 @@ const Transaction = () => {
                 placeholder={"Enter amount"}
                 label={"Amount (in Rs.)"}
                 type="number"
+                value={amount} 
                 onChange={(e) => setAmount(e.target.value)}
               />
             </div>
@@ -68,6 +68,19 @@ const Transaction = () => {
               <Button onClick={handleTransfer} label={"Transfer Money"} />
             </div>
           </div>
+
+         
+          {statusMessage && (
+            <div
+              className={`mt-2 p-2 rounded-md text-sm font-medium ${
+                statusMessage.type === "success"
+                  ? "text-green-700 bg-green-100"
+                  : "text-red-700 bg-red-100"
+              }`}
+            >
+              {statusMessage.text}
+            </div>
+          )}
         </div>
       </div>
     </div>

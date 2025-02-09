@@ -24,15 +24,17 @@ const Balance = () => {
   }, []);
 
   return (
-    <div className="flex justify-center">
-      <div className="flex gap-6 text-center">
-        <div className="p-2 font-medium">
-          Current Balance: Rs.{Math.round(balance)}
+    <div className="flex justify-center mt-4">
+      <div className="flex items-center gap-6 text-center bg-white shadow-lg px-6 py-3 rounded-xl border border-gray-200">
+        <div className="p-2 text-lg font-semibold text-gray-800">
+          💰 Current Balance:{" "}
+          <span className="text-cyan-600">Rs.{Math.round(balance)}</span>
         </div>
         <div className="px-1 pb-1">
           <Button
             onClick={() => navigate("/addbalance")}
-            label={"Add Balance"}
+            label={"➕ Add Balance"}
+            className="bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 px-4 rounded-full transition duration-200"
           />
         </div>
       </div>

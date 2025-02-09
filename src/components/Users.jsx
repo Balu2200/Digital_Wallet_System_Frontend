@@ -51,21 +51,28 @@ const Users = () => {
 
   return (
     <>
-      <div className="font-bold mt-6 mx-5 text-lg">Users</div>
-      <div className="my-3">
+      <div className="font-bold mt-3 mx-5 text-2xl text-gray-800 drop-shadow-md">
+        Users
+      </div>
+
+      <div className="my-2 flex justify-center">
         <input
           type="text"
-          placeholder="Search users..."
+          placeholder="🔍 Search users..."
           onChange={(e) => setFilter(e.target.value)}
-          className="w-1/2 mx-96 px-4 mx-3 py-1 border rounded-xl h-12 border-slate-200"
+          className="w-full max-w-lg px-5 py-2 border border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
         />
       </div>
-      <div>
-        {users.length > 0 ? (
-          users.map((user) => <User key={user._id} user={user} />)
-        ) : (
-          <p className="text-center text-gray-500 mt-4">No users found</p>
-        )}
+
+      
+      <div className="shadow-2xl mt-4 bg-white shadow-gray-600 mx-4 rounded-xl p-4">
+        <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-cyan-500 scrollbar-track-gray-100 space-y-2 pb-10">
+          {users.length > 0 ? (
+            users.map((user) => <User key={user._id} user={user} />)
+          ) : (
+            <p className="text-center text-gray-500 mt-4">No users found</p>
+          )}
+        </div>
       </div>
     </>
   );
