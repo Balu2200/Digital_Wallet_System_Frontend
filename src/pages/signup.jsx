@@ -6,8 +6,11 @@ import Headingtitle from "../components/Headingtitle";
 import InputBox from "../components/InputBox";
 import SubHeading from "../components/SubHeading";
 import { BASE_URL } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const signup = () => {
+
+  const navigate = useNavigate();
 
   const[firstName, setfirstName] = useState('');
   const[lastName, setlastName] = useState('');
@@ -54,7 +57,7 @@ const signup = () => {
               lastName,
               email,
               password
-            })}} label={"Submit"} />
+            }), navigate("/login") }} label={"Submit"} />
           </div>
           <div className="p-2 flex">
             <Bottomwarning

@@ -6,8 +6,11 @@ import InputBox from "../components/InputBox";
 import SubHeading from "../components/SubHeading";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const login = () => {
+const login = () => { 
+
+  const navigate = useNavigate();
 
   const[email, setEmail] = useState('');
   const[password, setPassword]= useState("");
@@ -34,11 +37,15 @@ const login = () => {
           />
           <div>
             <Button onClick ={() =>{
-              axios.post(BASE_URL+"/login", {
-                email,
-                password
-              });
-              
+              axios.post(
+                BASE_URL + "/login",
+                {
+                  email,
+                  password,
+                },
+                { withCredentials: true }
+              );
+              navigate("/dashboard")
             } }label={"Submit"} />
           </div>
           <div className="p-2 flex">
