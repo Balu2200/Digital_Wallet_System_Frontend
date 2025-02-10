@@ -7,6 +7,7 @@ import Body from "./pages/Body";
 import { UserContextProvider } from "./utils/Usercontext";
 import Addbalance from "./pages/addbalance";
 import TransactionHistory from "./pages/transactionsHistory";
+import Chatbot from "./pages/chatbot";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="transfer" element={<Transaction />} />
             <Route path="addbalance" element={<Addbalance />} />
             <Route path="history" element={<TransactionHistory />} />
+            <Route path="help" element={<Chatbot />} />
           </Route>
         </Routes>
       </BrowserRouter>

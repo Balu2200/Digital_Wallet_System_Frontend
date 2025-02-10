@@ -1,5 +1,4 @@
 import { useUser } from "../utils/Usercontext";
-import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
 
 const Appbar = () => {
@@ -16,19 +15,39 @@ const Appbar = () => {
   };
 
   const goToTransactions = () => {
-    navigate("/history"); 
+    navigate("/history");
   };
 
   return (
     <div className="shadow-xl h-16 flex justify-between items-center rounded-lg bg-cyan-500 px-6">
-      <div className="flex bg-indigo-600 items-center text-2xl font-bold text-black p-2 shadow-lg rounded-lg">
+      {/* Logo */}
+      <div className="flex bg-indigo-600 items-center text-2xl font-bold text-white p-2 shadow-lg rounded-lg">
         PaySwift
       </div>
 
       <div className="flex items-center space-x-6">
+        <button
+          onClick={() => navigate("/help")}
+          className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded transition-all"
+        >
+          💁‍♂️Help
+        </button>
+
+        <button
+          onClick={() => navigate("/dashboard")}
+          className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded transition-all"
+        >
+          Dashboard
+        </button>
+
+        <button
+          onClick={goToTransactions}
+          className="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded transition-all"
+        >
+          History
+        </button>
+
       
-        <Button onClick={() => navigate("/dashboard")} label={"Dashboard"} />
-        <Button onClick={goToTransactions} label={"History"} />
         <div className="flex items-center space-x-4">
           {user === null ? (
             <span className="text-white">Loading...</span>
@@ -39,10 +58,12 @@ const Appbar = () => {
                   Welcome, {user.firstName}
                 </h1>
               )}
-              <Button
+              <button
                 onClick={handleLogout}
-                label={user ? "Logout" : "Login"}
-              />
+                className="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded transition-all"
+              >
+                {user ? "Logout" : "Login"}
+              </button>
             </>
           )}
         </div>
