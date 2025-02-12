@@ -60,7 +60,7 @@ const Users = () => {
           type="text"
           placeholder="🔍 Search users..."
           onChange={(e) => setFilter(e.target.value)}
-          className="w-full max-w-lg px-5 py-2 border border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
+          className="w-full max-w-lg px-5 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
         />
       </div>
 

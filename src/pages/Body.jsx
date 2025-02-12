@@ -1,5 +1,4 @@
 import Appbar from "../components/Appbar";
-import Footer from "../components/Footer";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useUser } from "../utils/Usercontext";
 import { BASE_URL } from "../utils/constants";

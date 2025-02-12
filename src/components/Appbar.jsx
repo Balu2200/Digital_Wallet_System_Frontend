@@ -27,6 +27,12 @@ const Appbar = () => {
 
       <div className="flex items-center space-x-6">
         <button
+          onClick={() => navigate("/autopay")}
+          className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded transition-all"
+        >
+          Autopay
+        </button>
+        <button
           onClick={() => navigate("/help")}
           className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded transition-all"
         >
