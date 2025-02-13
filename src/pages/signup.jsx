@@ -16,6 +16,7 @@ const signup = () => {
   const[lastName, setlastName] = useState('');
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
+  const[pin, setPin] = useState('');
   const[statusMessage, setStatusMessage] = useState('');
 
   const handleSignup = async () => {
@@ -23,7 +24,7 @@ const signup = () => {
     try {
       await axios.post(
         BASE_URL + "/signup",
-        { firstName, lastName, email, password },
+        { firstName, lastName, email, password, pin},
         { withCredentials: true }
       );
       setStatusMessage("Signup successful! Redirecting...");
@@ -68,6 +69,13 @@ const signup = () => {
             }}
             placeholder="123123"
             label={"Password"}
+          />
+          <InputBox
+            onChange={(e) => {
+              setPin(e.target.value);
+            }}
+            placeholder="139213"
+            label={"Please add your account PIN"}
           />
           <div>
             <Button onClick={handleSignup} label={"Submit"} />

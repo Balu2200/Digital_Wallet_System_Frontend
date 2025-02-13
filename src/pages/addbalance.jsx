@@ -6,13 +6,16 @@ import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Addbalance = () => {
+const AddBalance = () => {
   const [amount, setAmount] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const [step, setStep] = useState(1);
+  const [pin, setPin] = useState("");
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
-  const handleaddbtn = async () => {
+
+  const handleNextStep = () => {
     const transferAmount = Number(amount);
 
     if (!amount || isNaN(transferAmount) || transferAmount <= 0) {
@@ -21,19 +24,36 @@ const Addbalance = () => {
       return;
     }
 
+    setStep(2);
+    setStatusMessage("");
+  };
+
+
+  const handleAddBalance = async () => {
+    if (!/^\d{4,6}$/.test(pin)) {
+      setStatusMessage("Invalid PIN. Must be 4-6 digits.");
+      setIsError(true);
+      return;
+    }
+
     try {
       const response = await axios.put(
         `${BASE_URL}/account/update`,
-        { amount: transferAmount },
+        { amount: Number(amount), pin },
         { withCredentials: true }
       );
 
       setStatusMessage("Balance updated successfully!");
       setIsError(false);
-      setAmount(""); 
+      setAmount("");
+      setPin("");
+      setStep(1);
     } catch (err) {
       console.error("Balance update failed:", err);
-      setStatusMessage("Balance not updated!");
+
+      setStatusMessage(
+        err.response?.data?.error || "Balance not updated! Please try again."
+      );
       setIsError(true);
     }
   };
@@ -41,26 +61,50 @@ const Addbalance = () => {
   return (
     <div className="bg-slate-400 h-screen flex justify-center">
       <div className="flex flex-col justify-center">
-        <div className="rounded-xl bg-white w-80 text-center p-2 h-max px-4 shadow-2xl">
+        <div className="rounded-xl bg-white w-80 text-center p-4 h-max shadow-2xl">
           <Headingtitle label={"Add Balance"} />
+
           <div className="gap-3 pt-2 mb-3">
-            <div>
-              <InputBox
-                placeholder={"Enter amount"}
-                label={"Amount (in Rs.)"}
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-            </div>
-            <div className="pb-4">
-              <Button onClick={handleaddbtn} label={"Add Money"} />
-            </div>
+            {step === 1 && (
+              <>
+                <div>
+                  <InputBox
+                    placeholder="Enter amount"
+                    label="Amount (in Rs.)"
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+                </div>
+                <div className="pb-4">
+                  <Button onClick={handleNextStep} label="Next" />
+                </div>
+              </>
+            )}
+
+            {step === 2 && (
+              <>
+                <div>
+                  <InputBox
+                    placeholder="Enter your PIN"
+                    label="Enter your PIN"
+                    type="password"
+                    value={pin}
+                    onChange={(e) => setPin(e.target.value)}
+                  />
+                </div>
+                <div className="pb-4">
+                  <Button onClick={handleAddBalance} label="Confirm" />
+                </div>
+              </>
+            )}
+
             {statusMessage && (
               <div className={isError ? "text-red-500" : "text-green-500"}>
                 {statusMessage}
               </div>
             )}
+
             <div className="pt-4">
               <button
                 onClick={() => navigate("/dashboard")}
@@ -76,4 +120,4 @@ const Addbalance = () => {
   );
 };
 
-export default Addbalance;
+export default AddBalance;
