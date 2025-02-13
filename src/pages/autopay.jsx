@@ -6,6 +6,9 @@ const AutoPay = () => {
   const [filteredUsers, setFilteredUsers] = useState("");
   const [users, setUsers] = useState([]);
   const [payments, setPayments] = useState([]);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [isError, setIsError] = useState(false);
+
   const [formData, setFormData] = useState({
     recipient: "",
     recipientName: "",
@@ -27,17 +30,16 @@ const AutoPay = () => {
     }
   };
 
-  const fetchPayments = async() =>{
-    try{
-        const { data } = await axios.get(`${BASE_URL}/scheduled-payments`, {
-          withCredentials: true,
-        });
-        setPayments(data);
-    } 
-    catch(error){
-      console.error("Error fetching users", error);
+  const fetchPayments = async () => {
+    try {
+      const { data } = await axios.get(`${BASE_URL}/scheduled-payments`, {
+        withCredentials: true,
+      });
+      setPayments(data);
+    } catch (error) {
+      console.error("Error fetching payments", error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchUsers();
@@ -54,24 +56,56 @@ const AutoPay = () => {
       await axios.post(`${BASE_URL}/schedule-payment`, formData, {
         withCredentials: true,
       });
+      setStatusMessage("Autopay has been scheduled successfully");
+      setIsError(false);
+      fetchPayments();
+      setFormData({
+        recipient: "",
+        recipientName: "",
+        amount: "",
+        frequency: "daily",
+        nextExecutionDate: "",
+      });
     } catch (error) {
       console.error("Error scheduling payment", error);
+      setStatusMessage("Something went wrong, please try again!");
+      setIsError(true);
     }
   };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${BASE_URL}/scheduled-payment/${id}`, {
+        withCredentials: true,
+      });
+      fetchPayments();
+      setStatusMessage("Autopay has been deleted successfully");
+      setIsError(false);
+    } catch (error) {
+      console.error("Error deleting payment", error);
+      setStatusMessage("Failed to delete autopay");
+      setIsError(true);
+    }
+  };
+
+  useEffect(() => {
+    if (statusMessage) {
+      const timer = setTimeout(() => setStatusMessage(""), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [statusMessage]);
 
   return (
     <div className="max-w-xl mx-auto p-6">
       <div className="bg-white shadow-xl rounded-2xl p-6 text-center">
         <h2 className="text-xl font-bold mb-4">Schedule a Payment</h2>
         <form onSubmit={handleSubmit}>
-          <div className="my-2 flex justify-center">
-            <input
-              type="text"
-              placeholder="🔍 Search users..."
-              onChange={(e) => setFilteredUsers(e.target.value.trim())} // ✅ Trim input
-              className="w-full max-w-lg px-5 py-2 border border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="🔍 Search users..."
+            onChange={(e) => setFilteredUsers(e.target.value.trim())}
+            className="w-full px-4 py-2 border rounded-full shadow focus:outline-none focus:ring-2 focus:ring-cyan-400"
+          />
           <select
             name="recipient"
             onChange={(e) => {
@@ -86,7 +120,7 @@ const AutoPay = () => {
                   : "",
               });
             }}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded mt-2"
           >
             <option value="">Select the user</option>
             {users.map((user) => (
@@ -104,17 +138,6 @@ const AutoPay = () => {
             required
             className="w-full p-2 rounded-md my-2 border"
           />
-          <select
-            name="frequency"
-            value={formData.frequency}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          >
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-          </select>
           <input
             name="nextExecutionDate"
             type="datetime-local"
@@ -130,30 +153,54 @@ const AutoPay = () => {
             Schedule Payment
           </button>
         </form>
+        {statusMessage && (
+          <div className={isError ? "text-red-400" : "text-green-600"}>
+            {statusMessage}
+          </div>
+        )}
       </div>
       <h2 className="text-xl font-bold mt-6">Scheduled Payments</h2>
-      <div className="bg-white shadow-lg rounded-lg p-4">
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-gray-100">
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse border border-gray-300 shadow-lg rounded-lg">
+          <thead className="bg-gray-200">
+            <tr>
               <th className="border p-2">Recipient</th>
               <th className="border p-2">Amount</th>
               <th className="border p-2">Frequency</th>
               <th className="border p-2">Next Execution Date</th>
+              <th className="border p-2">Action</th>
             </tr>
           </thead>
           <tbody>
-            {payments.map((payment) =>(
-              <tr key={payment._id} className="text-center border-t">
+            {payments.length > 0 ? (
+              payments.map((payment) => (
+                <tr key={payment.id} className="text-center border-t">
                   <td>{payment.recipientName}</td>
                   <td>{payment.amount}</td>
                   <td>{payment.frequency}</td>
-                  <td>{payment.nextExecutionDate}</td>
+                  <td>
+                    {new Date(payment.nextExecutionDate).toLocaleString()}
+                  </td>
+                  <td>
+                    <button
+                      className="text-red-500"
+                      onClick={() => handleDelete(payment.id)}
+                    >
+                      ❌ Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center p-4 text-gray-500">
+                  No scheduled payments found.
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
-      </div>
+      </div>  
     </div>
   );
 };
