@@ -61,18 +61,20 @@ const Transaction = () => {
   };
 
   return (
-    <div className="bg-slate-400 h-screen flex justify-center">
+    <div className="bg-gradient-to-r from-blue-500 to-purple-600 h-screen flex justify-center items-center">
       <div className="flex flex-col justify-center">
-        <div className="rounded-xl bg-white w-80 text-center p-2 h-max px-4 shadow-2xl">
+        <div className="rounded-2xl bg-white w-96 text-center p-6 shadow-2xl">
           <Headingtitle label={"Send Money"} />
 
           {step === 1 && (
             <div>
-              <div className="flex gap-3 pt-2 mb-3">
-                <h1 className="bg-green-500 rounded-full p-1 w-10">
+              <div className="flex gap-3 pt-4 mb-4 items-center">
+                <h1 className="bg-green-500 text-white font-bold text-xl rounded-full p-3 w-14 h-14 flex items-center justify-center">
                   {toname ? toname[0].toUpperCase() : "?"}
                 </h1>
-                <span className="font-medium">{toname || "Unknown"}</span>
+                <span className="font-semibold text-lg">
+                  {toname || "Unknown"}
+                </span>
               </div>
               <InputBox
                 placeholder={"Enter amount"}
@@ -81,8 +83,12 @@ const Transaction = () => {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
-              <div className="pt-2 pb-4">
-                <Button onClick={handleNextBtn} label={"Next"} />
+              <div className="pt-4 pb-6">
+                <Button
+                  onClick={handleNextBtn}
+                  label={"Next"}
+                  className="w-full"
+                />
               </div>
             </div>
           )}
@@ -96,18 +102,22 @@ const Transaction = () => {
                 value={pin}
                 onChange={(e) => setPin(e.target.value)}
               />
-              <div className="pt-2 pb-4">
-                <Button onClick={handleTransfer} label={"Transfer Money"} />
+              <div className="pt-4 pb-6">
+                <Button
+                  onClick={handleTransfer}
+                  label={"Transfer Money"}
+                  className="w-full"
+                />
               </div>
             </div>
           )}
 
           {statusMessage && (
             <div
-              className={`mt-2 p-2 rounded-md text-sm font-medium ${
+              className={`mt-4 p-3 rounded-md text-sm font-medium ${
                 statusMessage.type === "success"
-                  ? "text-green-700 bg-green-100"
-                  : "text-red-700 bg-red-100"
+                  ? "text-green-800 bg-green-200"
+                  : "text-red-800 bg-red-200"
               }`}
             >
               {statusMessage.text}

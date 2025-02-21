@@ -98,8 +98,8 @@ const AutoPay = () => {
   }, [statusMessage]);
 
   return (
-    <div className="max-w-xl mx-auto p-6">
-      <div className="bg-white shadow-xl rounded-2xl p-6 text-center">
+    <div className="max-w-xl mx-auto p-6 bg-gradient-to-r">
+      <div className="bg-gradient-to-r from-cyan-300 shadow-xl rounded-2xl p-6 text-center">
         <h2 className="text-xl font-bold mb-4">Schedule a Payment</h2>
         <form onSubmit={handleSubmit}>
           <select
@@ -116,7 +116,7 @@ const AutoPay = () => {
                   : "",
               });
             }}
-            className="w-full p-2 border rounded mt-2"
+            className="w-full p-2 border rounded-lg  mt-2"
           >
             <option value="">Select the user</option>
             {users.map((user) => (
@@ -132,7 +132,7 @@ const AutoPay = () => {
             onChange={handleChange}
             value={formData.amount}
             required
-            className="w-full p-2 rounded-md my-2 border"
+            className="w-full p-2 rounded-2xl my-2 border"
           />
           <input
             name="nextExecutionDate"
@@ -147,7 +147,7 @@ const AutoPay = () => {
               type="button"
               className={`p-2 rounded ${
                 formData.frequency === "daily"
-                  ? "bg-blue-500 text-white"
+                  ? "bg-indigo-500 text-white"
                   : "bg-gray-200"
               }`}
               onClick={() => handleFrequencyChange("daily")}

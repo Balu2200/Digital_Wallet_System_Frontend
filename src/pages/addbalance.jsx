@@ -14,7 +14,6 @@ const AddBalance = () => {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
-
   const handleNextStep = () => {
     const transferAmount = Number(amount);
 
@@ -27,7 +26,6 @@ const AddBalance = () => {
     setStep(2);
     setStatusMessage("");
   };
-
 
   const handleAddBalance = async () => {
     if (!/^\d{4,6}$/.test(pin)) {
@@ -59,9 +57,9 @@ const AddBalance = () => {
   };
 
   return (
-    <div className="bg-slate-400 h-screen flex justify-center">
+    <div className="bg-gradient-to-r from-indigo-200 to-blue-500 h-screen flex justify-center items-center">
       <div className="flex flex-col justify-center">
-        <div className="rounded-xl bg-white w-80 text-center p-4 h-max shadow-2xl">
+        <div className="rounded-xl bg-white w-96 text-center p-8 h-max shadow-2xl">
           <Headingtitle label={"Add Balance"} />
 
           <div className="gap-3 pt-2 mb-3">
@@ -77,7 +75,11 @@ const AddBalance = () => {
                   />
                 </div>
                 <div className="pb-4">
-                  <Button onClick={handleNextStep} label="Next" />
+                  <Button
+                    onClick={handleNextStep}
+                    label="Next"
+                    className="bg-gradient-to-r from-green-500 to-emerald-700 hover:from-green-600 hover:to-emerald-800 text-white font-medium py-2 px-4 rounded transition-all"
+                  />
                 </div>
               </>
             )}
@@ -94,7 +96,11 @@ const AddBalance = () => {
                   />
                 </div>
                 <div className="pb-4">
-                  <Button onClick={handleAddBalance} label="Confirm" />
+                  <Button
+                    onClick={handleAddBalance}
+                    label="Confirm"
+                    className="bg-gradient-to-r from-blue-500 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white font-medium py-2 px-4 rounded transition-all"
+                  />
                 </div>
               </>
             )}
@@ -108,7 +114,7 @@ const AddBalance = () => {
             <div className="pt-4">
               <button
                 onClick={() => navigate("/dashboard")}
-                className="text-blue-500 underline font-semibold"
+                className="text-indigo-500 underline font-semibold"
               >
                 Go to Dashboard
               </button>
