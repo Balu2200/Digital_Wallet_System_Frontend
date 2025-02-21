@@ -3,7 +3,6 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 
 const AutoPay = () => {
-  const [filteredUsers, setFilteredUsers] = useState("");
   const [users, setUsers] = useState([]);
   const [payments, setPayments] = useState([]);
   const [statusMessage, setStatusMessage] = useState("");
@@ -19,10 +18,9 @@ const AutoPay = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/profile/bulk?filter=${filteredUsers}`,
-        { withCredentials: true }
-      );
+      const response = await axios.get(`${BASE_URL}/profile/bulk`, {
+        withCredentials: true,
+      });
       setUsers(Array.isArray(response.data.users) ? response.data.users : []);
     } catch (error) {
       console.error("Error fetching users", error);
@@ -44,10 +42,14 @@ const AutoPay = () => {
   useEffect(() => {
     fetchUsers();
     fetchPayments();
-  }, [filteredUsers]);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFrequencyChange = (frequency) => {
+    setFormData({ ...formData, frequency });
   };
 
   const handleSubmit = async (e) => {
@@ -100,12 +102,6 @@ const AutoPay = () => {
       <div className="bg-white shadow-xl rounded-2xl p-6 text-center">
         <h2 className="text-xl font-bold mb-4">Schedule a Payment</h2>
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="🔍 Search users..."
-            onChange={(e) => setFilteredUsers(e.target.value.trim())}
-            className="w-full px-4 py-2 border rounded-full shadow focus:outline-none focus:ring-2 focus:ring-cyan-400"
-          />
           <select
             name="recipient"
             onChange={(e) => {
@@ -146,6 +142,41 @@ const AutoPay = () => {
             required
             className="w-full p-2 rounded-md my-2 border"
           />
+          <div className="flex justify-center gap-2 mt-2">
+            <button
+              type="button"
+              className={`p-2 rounded ${
+                formData.frequency === "daily"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200"
+              }`}
+              onClick={() => handleFrequencyChange("daily")}
+            >
+              Daily
+            </button>
+            <button
+              type="button"
+              className={`p-2 rounded ${
+                formData.frequency === "weekly"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200"
+              }`}
+              onClick={() => handleFrequencyChange("weekly")}
+            >
+              Weekly
+            </button>
+            <button
+              type="button"
+              className={`p-2 rounded ${
+                formData.frequency === "monthly"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200"
+              }`}
+              onClick={() => handleFrequencyChange("monthly")}
+            >
+              Monthly
+            </button>
+          </div>
           <button
             type="submit"
             className="bg-blue-500 text-white p-2 rounded w-full mt-4"
@@ -200,7 +231,7 @@ const AutoPay = () => {
             )}
           </tbody>
         </table>
-      </div>  
+      </div>
     </div>
   );
 };
