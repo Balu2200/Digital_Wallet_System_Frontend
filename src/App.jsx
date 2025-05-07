@@ -9,6 +9,7 @@ import Addbalance from "./pages/addbalance";
 import TransactionHistory from "./pages/transactionsHistory";
 import Chatbot from "./pages/chatbot";
 import Autopay from "./pages/autopay";
+import Otp from "./pages/Otp";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Body />}>
             <Route path="signup" element={<Signup />} />
             <Route path="login" element={<Login />} />
+            <Route path="otp" element={<Otp />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="transfer" element={<Transaction />} />
             <Route path="addbalance" element={<Addbalance />} />

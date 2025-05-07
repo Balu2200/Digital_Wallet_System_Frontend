@@ -57,12 +57,12 @@ const AddBalance = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-indigo-200 to-blue-500 h-screen flex justify-center items-center">
-      <div className="flex flex-col justify-center">
-        <div className="rounded-xl bg-white w-96 text-center p-8 h-max shadow-2xl">
+    <div className="bg-gradient-to-r from-indigo-200 to-blue-500 min-h-screen flex justify-center items-center py-6 px-2 sm:py-12 sm:px-0">
+      <div className="flex flex-col justify-center w-full">
+        <div className="rounded-xl bg-white w-full max-w-md mx-auto text-center p-4 sm:p-8 shadow-2xl">
           <Headingtitle label={"Add Balance"} />
 
-          <div className="gap-3 pt-2 mb-3">
+          <div className="space-y-6 pt-4">
             {step === 1 && (
               <>
                 <div>
@@ -74,11 +74,11 @@ const AddBalance = () => {
                     onChange={(e) => setAmount(e.target.value)}
                   />
                 </div>
-                <div className="pb-4">
+                <div className="pt-4">
                   <Button
                     onClick={handleNextStep}
                     label="Next"
-                    className="bg-gradient-to-r from-green-500 to-emerald-700 hover:from-green-600 hover:to-emerald-800 text-white font-medium py-2 px-4 rounded transition-all"
+                    className="bg-gradient-to-r from-green-500 to-emerald-700 hover:from-green-600 hover:to-emerald-800 text-white font-medium py-2 px-4 rounded transition-all w-full"
                   />
                 </div>
               </>
@@ -95,18 +95,20 @@ const AddBalance = () => {
                     onChange={(e) => setPin(e.target.value)}
                   />
                 </div>
-                <div className="pb-4">
+                <div className="pt-4">
                   <Button
                     onClick={handleAddBalance}
                     label="Confirm"
-                    className="bg-gradient-to-r from-blue-500 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white font-medium py-2 px-4 rounded transition-all"
+                    className="bg-gradient-to-r from-blue-500 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white font-medium py-2 px-4 rounded transition-all w-full"
                   />
                 </div>
               </>
             )}
 
             {statusMessage && (
-              <div className={isError ? "text-red-500" : "text-green-500"}>
+              <div className={`mt-4 p-3 rounded-md text-sm font-medium ${
+                isError ? "text-red-800 bg-red-100" : "text-green-800 bg-green-100"
+              }`}>
                 {statusMessage}
               </div>
             )}
@@ -114,7 +116,7 @@ const AddBalance = () => {
             <div className="pt-4">
               <button
                 onClick={() => navigate("/dashboard")}
-                className="text-indigo-500 underline font-semibold"
+                className="text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200"
               >
                 Go to Dashboard
               </button>

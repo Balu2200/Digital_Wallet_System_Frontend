@@ -19,8 +19,10 @@ const Login = () => {
   const [statusMessage, setStatusMessage] = useState("");
   const [step, setStep] = useState(1); 
   const [userId, setUserId] = useState(null); 
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async (event) => {
+    if (event) event.preventDefault();
     setStatusMessage("");
     try {
       const response = await axios.post(
@@ -28,11 +30,7 @@ const Login = () => {
         { email, password },
         { withCredentials: true }
       );
-
-    
-      setUserId(response.data.userId);
-      setStatusMessage("OTP sent to your email. Please verify.");
-      setStep(2); 
+      navigate("/otp", { state: { userId: response.data.userId } });
     } catch (error) {
       setStatusMessage(
         error.response?.data?.error || "Login failed. Try again."
@@ -48,7 +46,6 @@ const Login = () => {
         { userId, otp },
         { withCredentials: true }
       );
-
       addUser(response.data.user);
       setStatusMessage("Login successful! Redirecting...");
       setTimeout(() => navigate("/dashboard"), 1500);
@@ -60,45 +57,62 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-slate-400 h-screen flex justify-center">
-      <div className="flex flex-col justify-center">
-        <div className="rounded-xl bg-white w-80 text-center p-2 h-max px-4 shadow-2xl">
-          <Headingtitle label="Login" />
-          <SubHeading label="Please enter your details" />
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-indigo-200 to-blue-300 flex items-center justify-center py-4 px-2 sm:py-8 sm:px-0">
+      <div className="w-full max-w-md mx-auto">
+        <div className="bg-white rounded-2xl shadow-2xl px-4 py-6 sm:px-8 sm:py-10 flex flex-col items-center">
+          <div className="mb-6 w-full text-center">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-2 tracking-tight">Sign in to PaySwift</h1>
+            <p className="text-gray-500 text-sm sm:text-base">Welcome back! Please enter your details to continue.</p>
+          </div>
 
-          {step === 1 ? (
-            <>
-              <InputBox
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="email@gmail.com"
-                label="Email"
-              />
-              <InputBox
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="123123"
-                label="Password"
-                type="password"
-              />
-              <Button onClick={handleLogin} label="Submit" />
-            </>
-          ) : (
-            <>
-              <InputBox
-                onChange={(e) => setOtp(e.target.value)}
-                placeholder="Enter OTP"
-                label="OTP"
-              />
-              <Button onClick={handleVerifyOtp} label="Verify OTP" />
-            </>
-          )}
+          <form className="w-full space-y-5 sm:space-y-6" onSubmit={handleLogin}>
+            {step === 1 ? (
+              <>
+                <InputBox
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="email@gmail.com"
+                  label="Email"
+                  value={email}
+                />
+                <InputBox
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  label="Password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  toggleVisibility={() => setShowPassword((prev) => !prev)}
+                />
+                <Button
+                  type="submit"
+                  label="Sign In"
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-200 text-base sm:text-lg"
+                />
+              </>
+            ) : (
+              <>
+                <InputBox
+                  onChange={(e) => setOtp(e.target.value)}
+                  placeholder="Enter OTP"
+                  label="OTP"
+                  value={otp}
+                />
+                <Button
+                  onClick={handleVerifyOtp}
+                  label="Verify OTP"
+                  className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-200"
+                />
+              </>
+            )}
+          </form>
 
           {statusMessage && (
-            <div className="mt-2 text-sm font-medium text-indigo-500">
+            <div className="mt-4 text-sm font-medium px-2 py-2 rounded-lg w-full text-center sm:px-4"
+              style={{ color: statusMessage.includes('success') ? '#166534' : '#1e40af', background: statusMessage.includes('success') ? '#bbf7d0' : '#dbeafe' }}>
               {statusMessage}
             </div>
           )}
 
-          <div className="p-2 flex">
+          <div className="pt-4 sm:pt-6 w-full flex justify-center">
             <Bottomwarning
               label="Don't have an account?"
               buttonText="Signup"

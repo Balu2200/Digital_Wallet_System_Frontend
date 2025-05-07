@@ -64,12 +64,19 @@ const Users = () => {
         />
       </div>
 
-      <div className="shadow-2xl mt-4 bg-gradient-to-r from-gray-50 to-gray-100 shadow-gray-700 mx-4 rounded-xl p-4">
-        <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-500 scrollbar-track-gray-200 space-y-2 pb-10">
+      <div className="mt-4 bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-500 scrollbar-track-gray-200">
           {users.length > 0 ? (
             users.map((user) => <User key={user._id} user={user} />)
           ) : (
-            <p className="text-center text-gray-500 mt-4">No users found</p>
+            <div className="text-center py-8">
+              <div className="text-gray-400 mb-2">
+                <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <p className="text-gray-500">No users found</p>
+            </div>
           )}
         </div>
       </div>
@@ -81,29 +88,24 @@ function User({ user }) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-between border-b p-2 bg-gradient-to-r from-white to-gray-50">
-      <div className="flex">
-        <div className="rounded-full h-12 w-12 bg-indigo-200 flex justify-center mt-1 mr-2">
-          <div className="flex flex-col justify-center h-full text-xl font-semibold text-indigo-900">
-            {user.firstName[0]}
-            {user.lastName[0]}
+    <div className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-100 last:border-b-0">
+      <div className="flex items-center space-x-4">
+        <div className="relative">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white font-semibold text-lg">
+            {user.firstName[0]}{user.lastName[0]}
           </div>
+          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 border-2 border-white rounded-full"></div>
         </div>
-        <div className="flex flex-col justify-center h-full">
-          <div className="font-medium text-gray-800">
-            {user.firstName} {user.lastName}
-          </div>
+        <div>
+          <h3 className="font-medium text-gray-900">{user.firstName} {user.lastName}</h3>
+          <p className="text-sm text-gray-500">@{user.firstName.toLowerCase()}{user.lastName.toLowerCase()}</p>
         </div>
       </div>
-      <div className="flex flex-col justify-center h-full">
-        <Button
-          onClick={(e) => {
-            navigate(`/transfer?id=${user._id}&to=${user.firstName}`);
-          }}
-          label={"Send Money"}
-          className="bg-gradient-to-r from-green-500 to-emerald-700 hover:from-green-600 hover:to-emerald-800 text-white font-medium py-2 px-4 rounded transition-all"
-        />
-      </div>
+      <Button
+        onClick={() => navigate(`/transfer?id=${user._id}&to=${user.firstName}`)}
+        label="Send Money"
+        className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700"
+      />
     </div>
   );
 }
