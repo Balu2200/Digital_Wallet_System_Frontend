@@ -1,2 +1,1 @@
-export const BASE_URL =
-  location.hostname === "localhost" ? "http://localhost:1234" : "/api";
+export const BASE_URL = "https://payswift-backend.onrender.com";
