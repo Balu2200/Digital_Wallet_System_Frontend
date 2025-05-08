@@ -56,7 +56,7 @@ const AutoPay = () => {
     e.preventDefault();
     try {
       await axios.post(
-        `${BASE_URL}/scheduled-payments`,
+        `${BASE_URL}/schedule-payment`,
         formData,
         { withCredentials: true }
       );
@@ -78,7 +78,7 @@ const AutoPay = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${BASE_URL}/scheduled-payments/${id}`, {
+      await axios.delete(`${BASE_URL}/scheduled-payment/${id}`, {
         withCredentials: true,
       });
       setStatusMessage("Payment deleted successfully!");
