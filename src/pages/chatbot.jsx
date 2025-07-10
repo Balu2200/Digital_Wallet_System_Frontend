@@ -31,7 +31,7 @@ const Chatbot = () => {
         { withCredentials: true }
       );
 
-      const botMessage = { text: response.data.message, sender: "bot" };
+      const botMessage = { text: response.data.response, sender: "bot" };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       const errorMessage = {
