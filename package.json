@@ -12,6 +12,7 @@
   "dependencies": {
     "@radix-ui/react-select": "^2.1.6",
     "axios": "^1.7.9",
+    "caniuse-lite": "^1.0.30001727",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
