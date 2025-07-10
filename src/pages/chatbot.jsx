@@ -26,7 +26,7 @@ const Chatbot = () => {
 
     try {
       const response = await axios.post(
-        `${BASE_URL}/chatbot`,
+        `${BASE_URL}/chatbot/message`,
         { message: input },
         { withCredentials: true }
       );
