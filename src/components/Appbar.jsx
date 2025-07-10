@@ -11,8 +11,8 @@ const Appbar = () => {
   };
 
   return (
-    <div className="flex justify-center mt-6 px-4">
-      <nav className="w-full max-w-6xl bg-white shadow-lg rounded-lg">
+    <div className="flex justify-center mt-6 px-5">
+      <nav className="w-full max-w-7xl bg-white shadow-lg rounded-lg">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center">
