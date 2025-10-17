@@ -9,7 +9,6 @@ import Addbalance from "./pages/addbalance";
 import TransactionHistory from "./pages/transactionsHistory";
 import PrivateRoute from "./pages/privateRoute";
 import Autopay from "./pages/autopay";
-import Otp from "./pages/Otp";
 import Analytics from "./pages/Analytics";
 import Profile from "./pages/Profile";
 
@@ -22,7 +21,7 @@ function App() {
             {/* Public Routes */}
             <Route path="signup" element={<Signup />} />
             <Route path="login" element={<Login />} />
-            <Route path="otp" element={<Otp />} />
+            {/* OTP route removed: login is single-step now */}
 
             {/* Protected Routes */}
             <Route
