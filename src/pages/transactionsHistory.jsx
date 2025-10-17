@@ -16,7 +16,7 @@ const TransactionHistory = () => {
           params: { page, limit },
           withCredentials: true,
         });
-        setTransactions(response.data.transactions);  
+        setTransactions(response.data.transactions);
       } catch (err) {
         setError("Failed to fetch transactions");
         console.error(err);
@@ -29,73 +29,110 @@ const TransactionHistory = () => {
   }, [page]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center py-6 px-2 sm:py-10 sm:px-0">
-      <div className="w-full max-w-3xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-2xl px-4 py-6 sm:px-8 sm:py-10">
-          <div className="mb-6 w-full text-center">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-2 tracking-tight">Transaction History</h2>
-            <p className="text-gray-500 text-sm sm:text-base">A record of your recent transactions.</p>
+    <div className="min-h-screen bg-secondary-50 flex items-center justify-center py-8 px-4">
+      <div className="w-full max-w-4xl mt-28">
+        <div className="card p-8">
+          <div className="mb-8 text-center">
+            <h2 className="text-3xl font-bold text-secondary-900 mb-2">
+              Transaction History
+            </h2>
+            <p className="text-secondary-500">
+              A record of your recent transactions.
+            </p>
           </div>
 
           {loading ? (
             <div className="flex justify-center items-center h-32">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary-600 border-t-transparent"></div>
             </div>
           ) : error ? (
-            <p className="text-red-500 text-center">{error}</p>
-          ) : transactions.length === 0 ? (
             <div className="text-center py-8">
-              <div className="text-gray-400 mb-2">
-                <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              <p className="text-red-600">{error}</p>
+            </div>
+          ) : transactions.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg
+                  className="w-8 h-8 text-secondary-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                  />
                 </svg>
               </div>
-              <p className="text-gray-500">No transactions found.</p>
+              <p className="text-secondary-500">No transactions found.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 text-sm">
-                <thead className="bg-gray-50">
+              <table className="min-w-full">
+                <thead className="border-b border-secondary-200">
                   <tr>
-                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Receiver</th>
-                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sender</th>
-                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount (Rs.)</th>
-                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-secondary-600 uppercase">
+                      Receiver
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-secondary-600 uppercase">
+                      Sender
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-secondary-600 uppercase">
+                      Date
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-secondary-600 uppercase">
+                      Amount
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-secondary-600 uppercase">
+                      Status
+                    </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="divide-y divide-secondary-100">
                   {transactions.map((txn) => (
-                    <tr key={txn._id} className="hover:bg-gray-50">
-                      <td className="px-3 sm:px-6 py-4 whitespace-nowrap align-top">
-                        <div className="inline-block align-top">
-                          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold align-top">
-                            {txn.receiverName ? txn.receiverName[0] : "?"}
+                    <tr key={txn._id} className="hover:bg-secondary-50">
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-3">
+                          <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary-100 text-primary-600 font-semibold text-sm">
+                            {txn.receiverName
+                              ? txn.receiverName[0].toUpperCase()
+                              : "?"}
+                          </span>
+                          <span className="font-medium text-secondary-900">
+                            {txn.receiverName}
                           </span>
                         </div>
-                        <span className="ml-2 font-medium text-gray-900 align-top inline-block align-top">{txn.receiverName}</span>
                       </td>
-                      <td className="px-3 sm:px-6 py-4 whitespace-nowrap align-top">
-                        <div className="inline-block align-top">
-                          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold align-top">
-                            {txn.senderName ? txn.senderName[0] : "?"}
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-3">
+                          <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent-100 text-accent-600 font-semibold text-sm">
+                            {txn.senderName
+                              ? txn.senderName[0].toUpperCase()
+                              : "?"}
+                          </span>
+                          <span className="font-medium text-secondary-900">
+                            {txn.senderName}
                           </span>
                         </div>
-                        <span className="ml-2 font-medium text-gray-900 align-top inline-block align-top">{txn.senderName}</span>
                       </td>
-                      <td className="px-3 sm:px-6 py-4 whitespace-nowrap align-top text-gray-700">
+                      <td className="px-4 py-4 text-secondary-600 text-sm">
                         {new Date(txn.timestamp).toLocaleDateString()}
                       </td>
-                      <td className="px-3 sm:px-6 py-4 whitespace-nowrap align-top font-semibold text-gray-900">
+                      <td className="px-4 py-4 font-semibold text-secondary-900">
                         ₹{txn.amount}
                       </td>
-                      <td className="px-3 sm:px-6 py-4 whitespace-nowrap align-top">
-                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                          txn.status === "success"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
-                        }`}>
-                          {txn.status.charAt(0).toUpperCase() + txn.status.slice(1)}
+                      <td className="px-4 py-4">
+                        <span
+                          className={
+                            txn.status === "success"
+                              ? "badge-success"
+                              : "badge-error"
+                          }
+                        >
+                          {txn.status.charAt(0).toUpperCase() +
+                            txn.status.slice(1)}
                         </span>
                       </td>
                     </tr>
@@ -105,20 +142,19 @@ const TransactionHistory = () => {
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row justify-center items-center mt-6 gap-2 sm:gap-4">
+          <div className="flex justify-center items-center mt-8 gap-4">
             <button
               onClick={() => setPage(page - 1)}
               disabled={page === 1}
-              className="px-5 py-2 bg-blue-500 text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:bg-blue-600 transition-all"
+              className="btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Prev
+              ← Prev
             </button>
-            <span className="mx-2 text-base font-semibold">Page {page}</span>
-            <button
-              onClick={() => setPage(page + 1)}
-              className="px-5 py-2 bg-blue-500 text-white rounded-lg font-medium shadow-md hover:bg-blue-600 transition-all"
-            >
-              Next
+            <span className="text-sm font-medium text-secondary-700">
+              Page {page}
+            </span>
+            <button onClick={() => setPage(page + 1)} className="btn-secondary">
+              Next →
             </button>
           </div>
         </div>

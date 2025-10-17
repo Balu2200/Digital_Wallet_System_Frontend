@@ -8,9 +8,9 @@ import { UserContextProvider } from "./utils/Usercontext";
 import Addbalance from "./pages/addbalance";
 import TransactionHistory from "./pages/transactionsHistory";
 import PrivateRoute from "./pages/privateRoute";
-import Chatbot from "./pages/chatbot";
 import Autopay from "./pages/autopay";
 import Otp from "./pages/Otp";
+import Analytics from "./pages/Analytics";
 
 function App() {
   return (
@@ -57,10 +57,10 @@ function App() {
               }
             />
             <Route
-              path="help"
+              path="analytics"
               element={
                 <PrivateRoute>
-                  <Chatbot />
+                  <Analytics />
                 </PrivateRoute>
               }
             />
@@ -78,6 +78,5 @@ function App() {
     </UserContextProvider>
   );
 }
-
 
 export default App;

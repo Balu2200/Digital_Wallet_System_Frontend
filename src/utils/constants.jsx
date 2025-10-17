@@ -1,1 +1,1 @@
-export const BASE_URL = "https://payswift-backend.onrender.com";
+export const BASE_URL = "http://localhost:1234";

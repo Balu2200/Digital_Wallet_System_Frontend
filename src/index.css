@@ -1,3 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  * {
+    @apply antialiased;
+  }
+
+  body {
+    @apply font-sans bg-secondary-50 text-secondary-900;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 active:bg-primary-800 
+           text-white font-medium px-5 py-2.5 rounded-button
+           transition-all duration-200 ease-out
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
+           shadow-soft hover:shadow-medium;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary-100 hover:bg-secondary-200 active:bg-secondary-300
+           text-secondary-700 font-medium px-5 py-2.5 rounded-button
+           transition-all duration-200 ease-out
+           focus:outline-none focus:ring-2 focus:ring-secondary-400 focus:ring-offset-2;
+  }
+
+  .btn-accent {
+    @apply bg-accent-600 hover:bg-accent-700 active:bg-accent-800
+           text-white font-medium px-5 py-2.5 rounded-button
+           transition-all duration-200 ease-out
+           focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2
+           shadow-soft hover:shadow-medium;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary-600 hover:bg-primary-50 active:bg-primary-100
+           text-primary-600 font-medium px-5 py-2.5 rounded-button
+           transition-all duration-200 ease-out
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-card shadow-soft hover:shadow-medium 
+           transition-shadow duration-200;
+  }
+
+  .card-interactive {
+    @apply card cursor-pointer hover:shadow-strong
+           transform hover:-translate-y-0.5 transition-all duration-200;
+  }
+
+  /* Input Styles */
+  .input-field {
+    @apply w-full px-4 py-2.5 rounded-button border-2 border-secondary-200
+           bg-white text-secondary-900 placeholder-secondary-400
+           focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none
+           transition-all duration-200;
+  }
+
+  /* Badge Styles */
+  .badge-success {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
+           bg-accent-50 text-accent-700 border border-accent-200;
+  }
+
+  .badge-pending {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
+           bg-secondary-100 text-secondary-700 border border-secondary-300;
+  }
+
+  .badge-error {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
+           bg-red-50 text-red-700 border border-red-200;
+  }
+}

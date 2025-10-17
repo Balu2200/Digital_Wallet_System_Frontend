@@ -8,7 +8,7 @@ import SubHeading from "../components/SubHeading";
 import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 
-const signup = () => {
+const Signup = () => {
   const navigate = useNavigate();
 
   const [firstName, setfirstName] = useState("");
@@ -38,11 +38,15 @@ const signup = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-indigo-200 to-blue-300 flex items-center justify-center py-4 px-2 sm:py-8 sm:px-0">
-      <div className="w-full max-w-md mx-auto">
+      <div className="w-full max-w-md mx-auto mt-28">
         <div className="bg-white rounded-2xl shadow-2xl px-4 py-6 sm:px-8 sm:py-10 flex flex-col items-center">
           <div className="mb-6 w-full text-center">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-2 tracking-tight">Create your PaySwift Account</h1>
-            <p className="text-gray-500 text-sm sm:text-base">Sign up to get started with secure digital payments.</p>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-2 tracking-tight">
+              Create your PayVault Account
+            </h1>
+            <p className="text-gray-500 text-sm sm:text-base">
+              Sign up to get started with secure digital payments.
+            </p>
           </div>
 
           <form className="w-full space-y-5 sm:space-y-6">
@@ -87,8 +91,17 @@ const signup = () => {
           </form>
 
           {statusMessage && (
-            <div className="mt-4 text-sm font-medium px-2 py-2 rounded-lg w-full text-center sm:px-4"
-              style={{ color: statusMessage.includes('success') ? '#166534' : '#1e40af', background: statusMessage.includes('success') ? '#bbf7d0' : '#dbeafe' }}>
+            <div
+              className="mt-4 text-sm font-medium px-2 py-2 rounded-lg w-full text-center sm:px-4"
+              style={{
+                color: statusMessage.includes("success")
+                  ? "#166534"
+                  : "#1e40af",
+                background: statusMessage.includes("success")
+                  ? "#bbf7d0"
+                  : "#dbeafe",
+              }}
+            >
               {statusMessage}
             </div>
           )}
@@ -106,4 +119,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default Signup;

@@ -1,16 +1,23 @@
 import { useState } from "react";
 
-const InputBox = ({ placeholder, label, onChange, type = "text", value, toggleVisibility }) => {
+const InputBox = ({
+  placeholder,
+  label,
+  onChange,
+  type = "text",
+  value,
+  toggleVisibility,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div className="flex flex-col relative">
-      <label className="flex mb-1 font-medium">{label}</label>
+      <label className="block text-sm font-medium text-secondary-700 mb-2">
+        {label}
+      </label>
       <input
         onChange={onChange}
-        className={`border border-black p-2 rounded-lg pr-10 ${
-          isFocused ? "ring-2 ring-indigo-400" : ""
-        }`}
+        className="input-field"
         placeholder={placeholder}
         type={type}
         value={value}
@@ -22,11 +29,10 @@ const InputBox = ({ placeholder, label, onChange, type = "text", value, toggleVi
         <button
           type="button"
           onClick={toggleVisibility}
-          className="absolute right-5 top-12 -translate-y-1/2 flex items-center text-gray-500 focus:outline-none"
+          className="absolute right-3 top-10 flex items-center text-secondary-500 hover:text-secondary-700 focus:outline-none transition-colors"
           tabIndex={-1}
         >
           {type === "password" ? (
-            // Eye closed icon
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -42,7 +48,6 @@ const InputBox = ({ placeholder, label, onChange, type = "text", value, toggleVi
               />
             </svg>
           ) : (
-            // Eye Icon (password hidden)
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"

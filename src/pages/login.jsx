@@ -15,10 +15,10 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [otp, setOtp] = useState(""); 
+  const [otp, setOtp] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
-  const [step, setStep] = useState(1); 
-  const [userId, setUserId] = useState(null); 
+  const [step, setStep] = useState(1);
+  const [userId, setUserId] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (event) => {
@@ -58,14 +58,21 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-indigo-200 to-blue-300 flex items-center justify-center py-4 px-2 sm:py-8 sm:px-0">
-      <div className="w-full max-w-md mx-auto">
+      <div className="w-full max-w-md mx-auto mt-28">
         <div className="bg-white rounded-2xl shadow-2xl px-4 py-6 sm:px-8 sm:py-10 flex flex-col items-center">
           <div className="mb-6 w-full text-center">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-2 tracking-tight">Sign in to PaySwift</h1>
-            <p className="text-gray-500 text-sm sm:text-base">Welcome back! Please enter your details to continue.</p>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-2 tracking-tight">
+              Sign in to PayVault
+            </h1>
+            <p className="text-gray-500 text-sm sm:text-base">
+              Welcome back! Please enter your details to continue.
+            </p>
           </div>
 
-          <form className="w-full space-y-5 sm:space-y-6" onSubmit={handleLogin}>
+          <form
+            className="w-full space-y-5 sm:space-y-6"
+            onSubmit={handleLogin}
+          >
             {step === 1 ? (
               <>
                 <InputBox
@@ -106,8 +113,17 @@ const Login = () => {
           </form>
 
           {statusMessage && (
-            <div className="mt-4 text-sm font-medium px-2 py-2 rounded-lg w-full text-center sm:px-4"
-              style={{ color: statusMessage.includes('success') ? '#166534' : '#1e40af', background: statusMessage.includes('success') ? '#bbf7d0' : '#dbeafe' }}>
+            <div
+              className="mt-4 text-sm font-medium px-2 py-2 rounded-lg w-full text-center sm:px-4"
+              style={{
+                color: statusMessage.includes("success")
+                  ? "#166534"
+                  : "#1e40af",
+                background: statusMessage.includes("success")
+                  ? "#bbf7d0"
+                  : "#dbeafe",
+              }}
+            >
               {statusMessage}
             </div>
           )}

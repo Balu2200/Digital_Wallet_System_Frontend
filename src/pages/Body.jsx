@@ -1,4 +1,5 @@
 import Appbar from "../components/Appbar";
+import FloatingChatbot from "../components/FloatingChatbot";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useUser } from "../utils/Usercontext";
 import { BASE_URL } from "../utils/constants";
@@ -27,13 +28,13 @@ const Body = () => {
 
   useEffect(() => {
     fetchUser();
-  }, [user]); 
+  }, [user]);
 
   return (
     <div>
       <Appbar />
       <Outlet />
-      
+      <FloatingChatbot />
     </div>
   );
 };

@@ -55,11 +55,9 @@ const AutoPay = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        `${BASE_URL}/schedule-payment`,
-        formData,
-        { withCredentials: true }
-      );
+      await axios.post(`${BASE_URL}/schedule-payment`, formData, {
+        withCredentials: true,
+      });
       setStatusMessage("Payment scheduled successfully!");
       setIsError(false);
       fetchPayments();
@@ -71,7 +69,9 @@ const AutoPay = () => {
         nextExecutionDate: "",
       });
     } catch (error) {
-      setStatusMessage(error.response?.data?.message || "Failed to schedule payment");
+      setStatusMessage(
+        error.response?.data?.message || "Failed to schedule payment"
+      );
       setIsError(true);
     }
   };
@@ -91,15 +91,17 @@ const AutoPay = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-6 px-2 sm:py-8 sm:px-0">
-      <div className="max-w-7xl mx-auto px-0 sm:px-4 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="min-h-screen bg-secondary-50 py-8 px-4">
+      <div className="max-w-7xl mx-auto mt-28">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Schedule Payment Form */}
-          <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 w-full">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Schedule a Payment</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="card p-6">
+            <h2 className="text-xl font-semibold text-secondary-900 mb-6">
+              Schedule a Payment
+            </h2>
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-secondary-700 mb-2">
                   Select Recipient
                 </label>
                 <select
@@ -116,7 +118,7 @@ const AutoPay = () => {
                         : "",
                     });
                   }}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="input-field"
                   required
                 >
                   <option value="">Select a user</option>
@@ -129,7 +131,7 @@ const AutoPay = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-secondary-700 mb-2">
                   Amount (₹)
                 </label>
                 <input
@@ -139,12 +141,12 @@ const AutoPay = () => {
                   onChange={handleChange}
                   value={formData.amount}
                   required
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="input-field"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-secondary-700 mb-2">
                   Next Payment Date
                 </label>
                 <input
@@ -153,24 +155,24 @@ const AutoPay = () => {
                   onChange={handleChange}
                   value={formData.nextExecutionDate}
                   required
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="input-field"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-secondary-700 mb-2">
                   Payment Frequency
                 </label>
-                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-                  {['daily', 'weekly', 'monthly'].map((freq) => (
+                <div className="flex gap-3">
+                  {["daily", "weekly", "monthly"].map((freq) => (
                     <button
                       key={freq}
                       type="button"
                       onClick={() => handleFrequencyChange(freq)}
-                      className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      className={`flex-1 py-2.5 px-4 rounded-button text-sm font-medium transition-all duration-200 ${
                         formData.frequency === freq
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          ? "bg-primary-600 text-white shadow-soft"
+                          : "bg-secondary-100 text-secondary-700 hover:bg-secondary-200"
                       }`}
                     >
                       {freq.charAt(0).toUpperCase() + freq.slice(1)}
@@ -179,20 +181,17 @@ const AutoPay = () => {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
-              >
+              <button type="submit" className="btn-primary w-full">
                 Schedule Payment
               </button>
             </form>
 
             {statusMessage && (
               <div
-                className={`mt-4 p-3 rounded-lg text-sm font-medium ${
+                className={`mt-4 p-3 rounded-button text-sm font-medium ${
                   isError
-                    ? 'bg-red-100 text-red-800'
-                    : 'bg-green-100 text-green-800'
+                    ? "bg-red-50 text-red-700 border border-red-200"
+                    : "bg-accent-50 text-accent-700 border border-accent-200"
                 }`}
               >
                 {statusMessage}
@@ -201,49 +200,54 @@ const AutoPay = () => {
           </div>
 
           {/* Scheduled Payments List */}
-          <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 w-full">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Scheduled Payments</h2>
+          <div className="card p-6">
+            <h2 className="text-xl font-semibold text-secondary-900 mb-6">
+              Scheduled Payments
+            </h2>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 text-sm">
-                <thead className="bg-gray-50">
+              <table className="min-w-full text-sm">
+                <thead className="border-b border-secondary-200">
                   <tr>
-                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-secondary-600 uppercase">
                       Recipient
                     </th>
-                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-secondary-600 uppercase">
                       Amount
                     </th>
-                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-secondary-600 uppercase">
                       Frequency
                     </th>
-                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-secondary-600 uppercase">
                       Next Payment
                     </th>
-                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-secondary-600 uppercase">
                       Action
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="divide-y divide-secondary-100">
                   {payments.length > 0 ? (
                     payments.map((payment) => (
-                      <tr key={payment.id} className="hover:bg-gray-50">
-                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-gray-900">
+                      <tr key={payment.id} className="hover:bg-secondary-50">
+                        <td className="px-4 py-4 text-secondary-900">
                           {payment.recipientName}
                         </td>
-                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-gray-900">
+                        <td className="px-4 py-4 font-medium text-secondary-900">
                           ₹{payment.amount}
                         </td>
-                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-gray-900">
-                          {payment.frequency.charAt(0).toUpperCase() + payment.frequency.slice(1)}
+                        <td className="px-4 py-4 text-secondary-700">
+                          <span className="badge-pending">
+                            {payment.frequency.charAt(0).toUpperCase() +
+                              payment.frequency.slice(1)}
+                          </span>
                         </td>
-                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-gray-900">
+                        <td className="px-4 py-4 text-secondary-700 text-xs">
                           {new Date(payment.nextExecutionDate).toLocaleString()}
                         </td>
-                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
+                        <td className="px-4 py-4">
                           <button
                             onClick={() => handleDelete(payment.id)}
-                            className="text-red-600 hover:text-red-900 font-medium"
+                            className="text-sm font-medium text-red-600 hover:text-red-700 transition-colors"
                           >
                             Delete
                           </button>
@@ -252,7 +256,10 @@ const AutoPay = () => {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="5" className="px-3 sm:px-6 py-4 text-center text-gray-500">
+                      <td
+                        colSpan="5"
+                        className="px-4 py-8 text-center text-secondary-500"
+                      >
                         No scheduled payments found
                       </td>
                     </tr>
