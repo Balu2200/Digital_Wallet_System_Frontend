@@ -63,13 +63,13 @@ const Signup = () => {
           <form className="w-full space-y-5 sm:space-y-6">
             <InputBox
               onChange={(e) => setfirstName(e.target.value)}
-              placeholder="Balu"
+              placeholder="First Name"
               label={"First Name"}
               value={firstName}
             />
             <InputBox
               onChange={(e) => setlastName(e.target.value)}
-              placeholder="Pasumarthi"
+              placeholder="Last Name"
               label={"Last Name"}
               value={lastName}
             />
@@ -90,7 +90,7 @@ const Signup = () => {
             <InputBox
               onChange={(e) => setPin(e.target.value)}
               placeholder="4-6 digit PIN"
-              label={"Account PIN"}
+              label={"Your Account PIN"}
               value={pin}
               type="password"
             />
