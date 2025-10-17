@@ -8,6 +8,7 @@ import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../utils/Usercontext";
+import ErrorAlert from "../components/ErrorAlert";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,13 +18,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const [messageType, setMessageType] = useState("error");
   const [step, setStep] = useState(1);
   const [userId, setUserId] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (event) => {
     if (event) event.preventDefault();
     setStatusMessage("");
+    setLoading(true);
     try {
       const response = await axios.post(
         BASE_URL + "/login",
@@ -32,14 +36,21 @@ const Login = () => {
       );
       navigate("/otp", { state: { userId: response.data.userId } });
     } catch (error) {
-      setStatusMessage(
-        error.response?.data?.error || "Login failed. Try again."
-      );
+      const errorMessage =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        error.message ||
+        "Login failed. Please try again.";
+      setStatusMessage(errorMessage);
+      setMessageType("error");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleVerifyOtp = async () => {
     setStatusMessage("");
+    setLoading(true);
     try {
       const response = await axios.post(
         BASE_URL + "/verify-otp",
@@ -48,11 +59,18 @@ const Login = () => {
       );
       addUser(response.data.user);
       setStatusMessage("Login successful! Redirecting...");
+      setMessageType("success");
       setTimeout(() => navigate("/dashboard"), 1500);
     } catch (error) {
-      setStatusMessage(
-        error.response?.data?.error || "Invalid OTP. Try again."
-      );
+      const errorMessage =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        error.message ||
+        "Invalid OTP. Please try again.";
+      setStatusMessage(errorMessage);
+      setMessageType("error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -91,8 +109,9 @@ const Login = () => {
                 />
                 <Button
                   type="submit"
-                  label="Sign In"
+                  label={loading ? "Signing In..." : "Sign In"}
                   className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-200 text-base sm:text-lg"
+                  disabled={loading}
                 />
               </>
             ) : (
@@ -105,26 +124,21 @@ const Login = () => {
                 />
                 <Button
                   onClick={handleVerifyOtp}
-                  label="Verify OTP"
+                  label={loading ? "Verifying..." : "Verify OTP"}
                   className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-200"
+                  disabled={loading}
                 />
               </>
             )}
           </form>
 
           {statusMessage && (
-            <div
-              className="mt-4 text-sm font-medium px-2 py-2 rounded-lg w-full text-center sm:px-4"
-              style={{
-                color: statusMessage.includes("success")
-                  ? "#166534"
-                  : "#1e40af",
-                background: statusMessage.includes("success")
-                  ? "#bbf7d0"
-                  : "#dbeafe",
-              }}
-            >
-              {statusMessage}
+            <div className="mt-4 w-full">
+              <ErrorAlert
+                message={statusMessage}
+                type={messageType}
+                onClose={() => setStatusMessage("")}
+              />
             </div>
           )}
 

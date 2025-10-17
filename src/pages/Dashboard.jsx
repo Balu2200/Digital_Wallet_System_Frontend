@@ -7,7 +7,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-secondary-50">
-      <div className="max-w-7xl mx-auto px-6 py-8 mt-28">
+      <div className="max-w-7xl mx-auto px-6 py-8 pt-24">
         <div className="space-y-6">
           {/* Welcome Section */}
           <div className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-card p-8 text-white shadow-medium">

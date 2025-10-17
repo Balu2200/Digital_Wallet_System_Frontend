@@ -7,6 +7,7 @@ import InputBox from "../components/InputBox";
 import SubHeading from "../components/SubHeading";
 import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
+import ErrorAlert from "../components/ErrorAlert";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -17,10 +18,13 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [pin, setPin] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const [messageType, setMessageType] = useState("error");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSignup = async () => {
     setStatusMessage("");
+    setLoading(true);
     try {
       await axios.post(
         BASE_URL + "/signup",
@@ -28,11 +32,18 @@ const Signup = () => {
         { withCredentials: true }
       );
       setStatusMessage("Signup successful! Redirecting...");
+      setMessageType("success");
       setTimeout(() => navigate("/login"), 1500);
     } catch (error) {
-      setStatusMessage(
-        error.response?.data?.message || "Signup failed. Try again."
-      );
+      const errorMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Signup failed. Please try again.";
+      setStatusMessage(errorMessage);
+      setMessageType("error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,24 +96,19 @@ const Signup = () => {
             />
             <Button
               onClick={handleSignup}
-              label={"Sign Up"}
+              label={loading ? "Signing Up..." : "Sign Up"}
               className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-200 text-base sm:text-lg"
+              disabled={loading}
             />
           </form>
 
           {statusMessage && (
-            <div
-              className="mt-4 text-sm font-medium px-2 py-2 rounded-lg w-full text-center sm:px-4"
-              style={{
-                color: statusMessage.includes("success")
-                  ? "#166534"
-                  : "#1e40af",
-                background: statusMessage.includes("success")
-                  ? "#bbf7d0"
-                  : "#dbeafe",
-              }}
-            >
-              {statusMessage}
+            <div className="mt-4 w-full">
+              <ErrorAlert
+                message={statusMessage}
+                type={messageType}
+                onClose={() => setStatusMessage("")}
+              />
             </div>
           )}
 

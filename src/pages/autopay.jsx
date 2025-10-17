@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
+import ErrorAlert from "../components/ErrorAlert";
 
 const AutoPay = () => {
   const [users, setUsers] = useState([]);
   const [payments, setPayments] = useState([]);
   const [statusMessage, setStatusMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+  const [messageType, setMessageType] = useState("error");
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     recipient: "",
@@ -54,12 +56,13 @@ const AutoPay = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await axios.post(`${BASE_URL}/schedule-payment`, formData, {
         withCredentials: true,
       });
       setStatusMessage("Payment scheduled successfully!");
-      setIsError(false);
+      setMessageType("success");
       fetchPayments();
       setFormData({
         recipient: "",
@@ -69,10 +72,15 @@ const AutoPay = () => {
         nextExecutionDate: "",
       });
     } catch (error) {
-      setStatusMessage(
-        error.response?.data?.message || "Failed to schedule payment"
-      );
-      setIsError(true);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Failed to schedule payment. Please try again.";
+      setStatusMessage(errorMessage);
+      setMessageType("error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -82,17 +90,22 @@ const AutoPay = () => {
         withCredentials: true,
       });
       setStatusMessage("Payment deleted successfully!");
-      setIsError(false);
+      setMessageType("success");
       fetchPayments();
     } catch (error) {
-      setStatusMessage("Failed to delete payment");
-      setIsError(true);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Failed to delete payment. Please try again.";
+      setStatusMessage(errorMessage);
+      setMessageType("error");
     }
   };
 
   return (
     <div className="min-h-screen bg-secondary-50 py-8 px-4">
-      <div className="max-w-7xl mx-auto mt-28">
+      <div className="max-w-7xl mx-auto pt-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Schedule Payment Form */}
           <div className="card p-6">
@@ -181,20 +194,22 @@ const AutoPay = () => {
                 </div>
               </div>
 
-              <button type="submit" className="btn-primary w-full">
-                Schedule Payment
+              <button
+                type="submit"
+                className="btn-primary w-full"
+                disabled={loading}
+              >
+                {loading ? "Scheduling..." : "Schedule Payment"}
               </button>
             </form>
 
             {statusMessage && (
-              <div
-                className={`mt-4 p-3 rounded-button text-sm font-medium ${
-                  isError
-                    ? "bg-red-50 text-red-700 border border-red-200"
-                    : "bg-accent-50 text-accent-700 border border-accent-200"
-                }`}
-              >
-                {statusMessage}
+              <div className="mt-4">
+                <ErrorAlert
+                  message={statusMessage}
+                  type={messageType}
+                  onClose={() => setStatusMessage("")}
+                />
               </div>
             )}
           </div>

@@ -11,6 +11,7 @@ import PrivateRoute from "./pages/privateRoute";
 import Autopay from "./pages/autopay";
 import Otp from "./pages/Otp";
 import Analytics from "./pages/Analytics";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -69,6 +70,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <Autopay />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
                 </PrivateRoute>
               }
             />

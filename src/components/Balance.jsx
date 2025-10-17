@@ -3,25 +3,51 @@ import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
+import ErrorAlert from "./ErrorAlert";
 
 const Balance = () => {
   const [balance, setBalance] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const fetchBalance = async () => {
     try {
+      setLoading(true);
+      setError("");
       const response = await axios.get(`${BASE_URL}/account/balance`, {
         withCredentials: true,
       });
       setBalance(response.data.balance);
     } catch (err) {
       console.error("Fetch balance failed:", err);
+      const errorMessage =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Failed to fetch balance. Please try again.";
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchBalance();
   }, []);
+
+  if (error) {
+    return (
+      <div className="space-y-4">
+        <ErrorAlert message={error} type="error" onClose={() => setError("")} />
+        <button
+          onClick={fetchBalance}
+          className="text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -45,9 +71,16 @@ const Balance = () => {
           <h3 className="text-sm font-medium text-secondary-500 mb-1">
             Available Balance
           </h3>
-          <p className="text-3xl font-bold text-secondary-900">
-            ₹{Math.round(balance).toLocaleString()}
-          </p>
+          {loading ? (
+            <div className="flex items-center gap-2">
+              <div className="animate-spin rounded-full h-6 w-6 border-2 border-primary-600 border-t-transparent"></div>
+              <span className="text-sm text-secondary-500">Loading...</span>
+            </div>
+          ) : (
+            <p className="text-3xl font-bold text-secondary-900">
+              ₹{Math.round(balance).toLocaleString()}
+            </p>
+          )}
         </div>
       </div>
       <div>
@@ -55,6 +88,7 @@ const Balance = () => {
           onClick={() => navigate("/addbalance")}
           label="Add Money"
           variant="accent"
+          disabled={loading}
         />
       </div>
     </div>

@@ -30,7 +30,7 @@ const TransactionHistory = () => {
 
   return (
     <div className="min-h-screen bg-secondary-50 flex items-center justify-center py-8 px-4">
-      <div className="w-full max-w-4xl mt-28">
+      <div className="w-full max-w-4xl pt-24">
         <div className="card p-8">
           <div className="mb-8 text-center">
             <h2 className="text-3xl font-bold text-secondary-900 mb-2">

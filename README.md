@@ -1,208 +1,402 @@
-# PayVault - Digital Payment Platform 💰
+# PaySwift - Digital Payment Platform# PayVault - Digital Payment Platform 💰
 
-> A modern, secure, and feature-rich digital wallet application for seamless financial transactions
+> A modern, secure digital wallet application built with React and Tailwind CSS> A modern, secure, and feature-rich digital wallet application for seamless financial transactions
 
-[![React](https://img.shields.io/badge/React-19.0.0-blue.svg)](https://reactjs.org/)
+## 🚀 Quick Start[![React](https://img.shields.io/badge/React-19.0.0-blue.svg)](https://reactjs.org/)
+
 [![Node.js](https://img.shields.io/badge/Node.js-Express-green.svg)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Database-brightgreen.svg)](https://www.mongodb.com/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38bdf8.svg)](https://tailwindcss.com/)
+
+### Prerequisites[![MongoDB](https://img.shields.io/badge/MongoDB-Database-brightgreen.svg)](https://www.mongodb.com/)
+
+- Node.js (v16+)[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38bdf8.svg)](https://tailwindcss.com/)
+
+- npm or yarn
 
 ## 📋 Table of Contents
 
+### Installation
+
 - [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Design System](#design-system)
+
+````bash- [Features](#features)
+
+# Install dependencies- [Tech Stack](#tech-stack)
+
+npm install- [Design System](#design-system)
+
 - [Getting Started](#getting-started)
-- [API Documentation](#api-documentation)
-- [Project Structure](#project-structure)
+
+# Start development server- [API Documentation](#api-documentation)
+
+npm run dev- [Project Structure](#project-structure)
+
 - [Analytics Feature](#analytics-feature)
-- [UI/UX Highlights](#uiux-highlights)
-- [Contributing](#contributing)
-- [License](#license)
 
----
+# Build for production- [UI/UX Highlights](#uiux-highlights)
 
-## 🎯 Overview
+npm run build- [Contributing](#contributing)
 
-PayVault is a full-stack fintech web application built using the MERN (MongoDB, Express, React, Node.js) stack with Tailwind CSS for modern, responsive styling. The platform enables users to transfer money securely, manage accounts, view transaction history, schedule automatic payments, analyze financial data through interactive dashboards, and get assistance through an AI-powered chatbot.
+```- [License](#license)
 
----
 
-## ✨ Features
+
+The app will run on `http://localhost:5173`---
+
+
+
+## 🛠️ Tech Stack## 🎯 Overview
+
+
+
+- **React 19.0.0** - Modern UI libraryPayVault is a full-stack fintech web application built using the MERN (MongoDB, Express, React, Node.js) stack with Tailwind CSS for modern, responsive styling. The platform enables users to transfer money securely, manage accounts, view transaction history, schedule automatic payments, analyze financial data through interactive dashboards, and get assistance through an AI-powered chatbot.
+
+- **React Router DOM 7.1.5** - Client-side routing
+
+- **Tailwind CSS 3.4** - Utility-first CSS framework---
+
+- **Axios** - HTTP client
+
+- **Vite 6.1** - Build tool## ✨ Features
+
+- **Heroicons** - Icon library
 
 ### 🔐 User Authentication & Security
 
+## ✨ Key Features
+
 - **JWT-based authentication & authorization**: Secure access control for all user operations
-- **Email OTP verification**: Two-factor authentication for enhanced security
-- **PIN-based transaction verification**: Additional security layer for money transfers
-- **Data sanitization and input validation**: Protection against malicious inputs and SQL injection
-- **Secure cookie-based session management**: HttpOnly cookies for token storage
+
+### 🔐 Authentication & Security- **Email OTP verification**: Two-factor authentication for enhanced security
+
+- JWT-based authentication- **PIN-based transaction verification**: Additional security layer for money transfers
+
+- Email OTP verification- **Data sanitization and input validation**: Protection against malicious inputs and SQL injection
+
+- PIN-protected transactions- **Secure cookie-based session management**: HttpOnly cookies for token storage
+
+- Secure session management
 
 ### 💸 Money Transfer & Account Management
 
-- **Instant user-to-user money transfers**: Send money to any registered user instantly
-- **PIN-protected transactions**: Every transfer requires PIN verification
-- **Real-time balance updates**: See your balance change instantly after transactions
-- **Transaction history with pagination**: View all your past transactions with detailed records
-- **Add balance functionality**: Top up your wallet easily
+### 💸 Financial Operations
+
+- Instant money transfers- **Instant user-to-user money transfers**: Send money to any registered user instantly
+
+- Real-time balance updates- **PIN-protected transactions**: Every transfer requires PIN verification
+
+- Transaction history- **Real-time balance updates**: See your balance change instantly after transactions
+
+- Add balance functionality- **Transaction history with pagination**: View all your past transactions with detailed records
+
+- User search- **Add balance functionality**: Top up your wallet easily
+
 - **Search users by name**: Quick search to find recipients
 
-### ⚡ AutoPay (Scheduled Payments)
+### ⚡ AutoPay
 
-- **Recurring payment scheduling**: Set up automatic payments (daily, weekly, monthly)
+- Schedule recurring payments (daily/weekly/monthly)### ⚡ AutoPay (Scheduled Payments)
+
+- Manage scheduled payments
+
+- Next payment date tracking- **Recurring payment scheduling**: Set up automatic payments (daily, weekly, monthly)
+
 - **Payment management dashboard**: View and manage all scheduled payments
-- **Easy cancellation**: Delete scheduled payments anytime
-- **Next payment date tracking**: Know exactly when your next payment will execute
-- **Recipient management**: Choose from your contact list
-- **Success notifications**: Get confirmation messages for all AutoPay activities
 
-### 📊 Analytics & Insights
+### 📊 Analytics Dashboard- **Easy cancellation**: Delete scheduled payments anytime
+
+- **Line Chart**: Balance trend over time- **Next payment date tracking**: Know exactly when your next payment will execute
+
+- **Area Chart**: Income vs expenses comparison- **Recipient management**: Choose from your contact list
+
+- **Enhanced Bar Chart**: Monthly transaction breakdown- **Success notifications**: Get confirmation messages for all AutoPay activities
+
+- **Donut Charts**: Transaction success rate & spending by category
+
+- **Weekly Heatmap**: Transaction intensity by day/hour### 📊 Analytics & Insights
+
+- **Key Metrics**: Balance, sent, received, net cash flow
 
 - **Financial Overview Dashboard**: Comprehensive view of your financial health
-- **Visual Charts & Graphs**:
-  - Monthly trends (sent vs received)
-  - Transaction success/failure pie chart
-  - Top recipients bar chart
+
+### 💬 AI Chatbot- **Visual Charts & Graphs**:
+
+- Floating chat interface  - Monthly trends (sent vs received)
+
+- Real-time assistance  - Transaction success/failure pie chart
+
+- Common query support  - Top recipients bar chart
+
   - Recent activity timeline
-- **Key Metrics**:
-  - Current balance
-  - Total money sent/received
-  - Net cash flow
-  - Transaction success rate
-- **Interactive visualizations**: Built with pure CSS/SVG (no external chart libraries)
-- **Responsive charts**: Adapt to all screen sizes
 
-### 💬 AI Chatbot Assistance
+### 🎨 Professional UI/UX- **Key Metrics**:
 
-- **Floating chat interface**: Always accessible from any page
+- Full-width responsive navbar with dropdown menus  - Current balance
+
+- Active link highlighting  - Total money sent/received
+
+- Mobile-responsive menu  - Net cash flow
+
+- Profile management with avatar  - Transaction success rate
+
+- Two-step verification toggle- **Interactive visualizations**: Built with pure CSS/SVG (no external chart libraries)
+
+- Modern card-based layouts- **Responsive charts**: Adapt to all screen sizes
+
+- Smooth animations
+
+- Consistent error handling### 💬 AI Chatbot Assistance
+
+
+
+## 📁 Project Structure- **Floating chat interface**: Always accessible from any page
+
 - **Rule-based decision tree**: Quick and accurate responses
-- **Common queries support**:
-  - Balance inquiries
-  - Transaction details
-  - How-to guides
-  - Troubleshooting
-- **Professional UI**: Modern chat interface with bot avatar
-- **Real-time responses**: Instant answers to your questions
 
-### 🎨 Modern UI/UX
+```- **Common queries support**:
 
-- **Clean, minimal design**: Three-color theme (Indigo, Slate, Emerald)
-- **Floating navigation bar**: Modern glassmorphism effect
-- **Grid-based contact layout**: Beautiful card-based user directory
-- **Professional search bar**: Fast and intuitive user search
-- **Responsive design**: Works perfectly on all devices
-- **Smooth animations**: Polished transitions throughout
-- **Dark mode support**: Eye-friendly interface (optional)
+Frontend/  - Balance inquiries
 
----
+├── src/  - Transaction details
 
-## 🛠️ Tech Stack
+│   ├── components/      # Reusable UI components  - How-to guides
 
-### Frontend
+│   │   ├── Appbar.jsx           # Navigation bar  - Troubleshooting
 
-- **React 19.0.0**: Modern UI library with hooks
-- **React Router DOM 7.1.5**: Client-side routing
-- **Axios**: HTTP client for API requests
-- **Tailwind CSS 3.4**: Utility-first CSS framework
-- **Vite 6.1**: Next-generation frontend tooling
-- **React Icons**: Icon library
+│   │   ├── Balance.jsx          # Balance display- **Professional UI**: Modern chat interface with bot avatar
 
-### Backend
+│   │   ├── Button.jsx           # Reusable buttons- **Real-time responses**: Instant answers to your questions
 
-- **Node.js**: JavaScript runtime
-- **Express.js**: Web application framework
+│   │   ├── ErrorAlert.jsx       # Error/success alerts
+
+│   │   ├── Footer.jsx           # Footer component### 🎨 Modern UI/UX
+
+│   │   ├── InputBox.jsx         # Form inputs
+
+│   │   └── Users.jsx            # User list/grid- **Clean, minimal design**: Three-color theme (Indigo, Slate, Emerald)
+
+│   ├── pages/          # Application pages- **Floating navigation bar**: Modern glassmorphism effect
+
+│   │   ├── Analytics.jsx        # Analytics dashboard- **Grid-based contact layout**: Beautiful card-based user directory
+
+│   │   ├── Dashboard.jsx        # Main dashboard- **Professional search bar**: Fast and intuitive user search
+
+│   │   ├── Profile.jsx          # User profile & settings- **Responsive design**: Works perfectly on all devices
+
+│   │   ├── login.jsx            # Login page- **Smooth animations**: Polished transitions throughout
+
+│   │   ├── signup.jsx           # Signup page- **Dark mode support**: Eye-friendly interface (optional)
+
+│   │   ├── Otp.jsx              # OTP verification
+
+│   │   ├── transaction.jsx      # Send money---
+
+│   │   ├── addbalance.jsx       # Add balance
+
+│   │   ├── transactionsHistory.jsx  # Transaction list## 🛠️ Tech Stack
+
+│   │   ├── autopay.jsx          # AutoPay management
+
+│   │   └── privateRoute.jsx    # Route protection### Frontend
+
+│   ├── utils/          # Utilities
+
+│   │   ├── constants.jsx        # API constants- **React 19.0.0**: Modern UI library with hooks
+
+│   │   └── Usercontext.jsx      # Global state- **React Router DOM 7.1.5**: Client-side routing
+
+│   ├── App.jsx         # Main app component- **Axios**: HTTP client for API requests
+
+│   ├── main.jsx        # React entry point- **Tailwind CSS 3.4**: Utility-first CSS framework
+
+│   └── index.css       # Global styles- **Vite 6.1**: Next-generation frontend tooling
+
+├── public/             # Static assets- **React Icons**: Icon library
+
+├── index.html
+
+├── tailwind.config.js  # Tailwind configuration### Backend
+
+├── vite.config.js      # Vite configuration
+
+└── package.json- **Node.js**: JavaScript runtime
+
+```- **Express.js**: Web application framework
+
 - **MongoDB**: NoSQL database
-- **Mongoose**: MongoDB object modeling
+
+## 🎨 Design System- **Mongoose**: MongoDB object modeling
+
 - **JWT**: JSON Web Tokens for authentication
-- **Bcrypt**: Password hashing
-- **Nodemailer**: Email service for OTP
-- **Node-cron**: Task scheduler for AutoPay
 
-### Development Tools
+### Color Palette- **Bcrypt**: Password hashing
 
-- **ESLint**: Code linting
-- **PostCSS**: CSS processing
-- **Autoprefixer**: CSS vendor prefixing
+- **Primary (Indigo)**: `#6366f1` - Main actions, links- **Nodemailer**: Email service for OTP
 
----
+- **Accent (Emerald)**: `#10b981` - Success states, income- **Node-cron**: Task scheduler for AutoPay
 
-## 🎨 Design System
+- **Secondary (Slate)**: `#64748b` - Text, borders
 
-### Color Palette
+- **Error (Red)**: `#ef4444` - Errors, expenses### Development Tools
+
+
+
+### Key Components- **ESLint**: Code linting
+
+- **ErrorAlert**: Reusable alert component (error/success/warning/info)- **PostCSS**: CSS processing
+
+- **Card**: Standard card with shadow and rounded corners- **Autoprefixer**: CSS vendor prefixing
+
+- **Button**: Primary, secondary, and ghost variants
+
+- **Input**: Consistent form inputs with validation states---
+
+
+
+## 🔧 Configuration## 🎨 Design System
+
+
+
+### Environment Variables### Color Palette
+
+Create a `.env` file in the root:
 
 ```javascript
-// Primary - Indigo
-primary: {
-  50: '#eef2ff',
+
+```env// Primary - Indigo
+
+VITE_API_URL=http://localhost:3000primary: {
+
+```  50: '#eef2ff',
+
   100: '#e0e7ff',
-  200: '#c7d2fe',
-  300: '#a5b4fc',
+
+### API Endpoints  200: '#c7d2fe',
+
+Base URL is configured in `src/utils/constants.jsx`  300: '#a5b4fc',
+
   400: '#818cf8',
-  500: '#6366f1',
-  600: '#4f46e5',  // Main primary
-  700: '#4338ca',
+
+```javascript  500: '#6366f1',
+
+export const BASE_URL = "http://localhost:3000";  600: '#4f46e5',  // Main primary
+
+```  700: '#4338ca',
+
   800: '#3730a3',
-  900: '#312e81',
+
+## 📊 Analytics Features  900: '#312e81',
+
 }
+
+The Analytics page includes professional data visualizations:
 
 // Secondary - Slate
-secondary: {
-  50: '#f8fafc',
-  100: '#f1f5f9',
-  200: '#e2e8f0',
-  300: '#cbd5e1',
-  400: '#94a3b8',
+
+1. **Balance Trend Line Chart** - Shows balance fluctuation over 6 monthssecondary: {
+
+2. **Income vs Expenses Area Chart** - Dual-layer comparison with gradients  50: '#f8fafc',
+
+3. **Monthly Comparison Bar Chart** - Side-by-side bars for received/sent  100: '#f1f5f9',
+
+4. **Transaction Success Donut** - Success rate with percentage breakdown  200: '#e2e8f0',
+
+5. **Spending by Category Donut** - Multi-segment spending distribution  300: '#cbd5e1',
+
+6. **Weekly Activity Heatmap** - GitHub-style heatmap showing transaction intensity  400: '#94a3b8',
+
   500: '#64748b',
-  600: '#475569',
+
+All charts are built with pure SVG/CSS for optimal performance.  600: '#475569',
+
   700: '#334155',
-  800: '#1e293b',
+
+## 🔒 Security Features  800: '#1e293b',
+
   900: '#0f172a',
-}
 
-// Accent - Emerald
-accent: {
-  50: '#ecfdf5',
+- JWT token storage in secure cookies}
+
+- PIN verification for transactions
+
+- Input validation and sanitization// Accent - Emerald
+
+- Protected routes with authentication checksaccent: {
+
+- Error handling with user-friendly messages  50: '#ecfdf5',
+
   100: '#d1fae5',
-  200: '#a7f3d0',
+
+## 📱 Responsive Design  200: '#a7f3d0',
+
   300: '#6ee7b7',
-  400: '#34d399',
-  500: '#10b981',  // Main accent
-  600: '#059669',
-  700: '#047857',
+
+- **Mobile**: Single column layout, hamburger menu  400: '#34d399',
+
+- **Tablet**: Two-column grid, expanded navbar  500: '#10b981',  // Main accent
+
+- **Desktop**: Full grid layouts, dropdown menus  600: '#059669',
+
+- **Large screens**: Optimized spacing and layout  700: '#047857',
+
   800: '#065f46',
-  900: '#064e3b',
+
+## 🤝 Contributing  900: '#064e3b',
+
 }
-```
 
-### Typography
+1. Fork the repository```
 
-- **Font Family**: Inter (Google Fonts)
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)### Typography
+
+4. Push to branch (`git push origin feature/AmazingFeature`)
+
+5. Open a Pull Request- **Font Family**: Inter (Google Fonts)
+
 - **Headings**: Bold, large sizes with tight tracking
-- **Body**: Regular weight, comfortable line height
+
+## 📄 License- **Body**: Regular weight, comfortable line height
+
 - **Code**: Monospace for technical content
+
+This project is licensed under the MIT License.
 
 ### Component Classes
 
+## 👨‍💻 Author
+
 ```css
-/* Buttons */
+
+**Balu Pasumarthi** - [@Balu2200](https://github.com/Balu2200)/* Buttons */
+
 .btn-primary    // Primary action button
-.btn-secondary  // Secondary action button
+
+## 📧 Support.btn-secondary  // Secondary action button
+
 .btn-ghost      // Minimal ghost button
 
+For support or questions, create an issue on GitHub.
+
 /* Cards */
-.card           // Standard card container
+
+---.card           // Standard card container
+
 .card-hover     // Card with hover effects
 
+**Built with ❤️ using React, Tailwind CSS, and Vite**
+
 /* Inputs */
-.input-field    // Text input styling
+
+*Last Updated: October 17, 2025*.input-field    // Text input styling
+
 .input-error    // Error state input
 
 /* Badges */
 .badge-success  // Success status
 .badge-pending  // Pending status
 .badge-error    // Error status;
-```
+````
 
 ### Spacing & Layout
 

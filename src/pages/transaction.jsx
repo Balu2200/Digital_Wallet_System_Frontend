@@ -5,6 +5,7 @@ import InputBox from "../components/InputBox";
 import { useSearchParams } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
+import ErrorAlert from "../components/ErrorAlert";
 
 const Transaction = () => {
   const [searchParams] = useSearchParams();
@@ -16,6 +17,7 @@ const Transaction = () => {
   const [transferAmount, setTransferAmount] = useState(null);
   const [statusMessage, setStatusMessage] = useState(null);
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const handleNextBtn = () => {
     const amountValue = Number(amount);
@@ -39,8 +41,9 @@ const Transaction = () => {
       return;
     }
 
+    setLoading(true);
     try {
-      const response = await axios.post(
+      await axios.post(
         `${BASE_URL}/account/transfer`,
         { to: id, amount: transferAmount, pin },
         { withCredentials: true }
@@ -51,12 +54,17 @@ const Transaction = () => {
       setPin("");
       setStep(1);
     } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Transfer failed. Please try again.";
       setStatusMessage({
-        text:
-          "Transfer Failed: " +
-          (error.response?.data?.message || error.message),
+        text: errorMessage,
         type: "error",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,22 +113,21 @@ const Transaction = () => {
               <div className="pt-4 pb-6">
                 <Button
                   onClick={handleTransfer}
-                  label={"Transfer Money"}
+                  label={loading ? "Processing..." : "Transfer Money"}
                   className="w-full"
+                  disabled={loading}
                 />
               </div>
             </div>
           )}
 
           {statusMessage && (
-            <div
-              className={`mt-4 p-3 rounded-md text-sm font-medium ${
-                statusMessage.type === "success"
-                  ? "text-green-800 bg-green-200"
-                  : "text-red-800 bg-red-200"
-              }`}
-            >
-              {statusMessage.text}
+            <div className="mt-4">
+              <ErrorAlert
+                message={statusMessage.text}
+                type={statusMessage.type}
+                onClose={() => setStatusMessage(null)}
+              />
             </div>
           )}
         </div>

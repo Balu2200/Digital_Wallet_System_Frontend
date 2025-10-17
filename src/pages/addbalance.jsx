@@ -5,13 +5,15 @@ import { useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ErrorAlert from "../components/ErrorAlert";
 
 const AddBalance = () => {
   const [amount, setAmount] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const [step, setStep] = useState(1);
   const [pin, setPin] = useState("");
-  const [isError, setIsError] = useState(false);
+  const [messageType, setMessageType] = useState("error");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleNextStep = () => {
@@ -19,7 +21,7 @@ const AddBalance = () => {
 
     if (!amount || isNaN(transferAmount) || transferAmount <= 0) {
       setStatusMessage("Please enter a valid amount greater than 0.");
-      setIsError(true);
+      setMessageType("error");
       return;
     }
 
@@ -30,29 +32,35 @@ const AddBalance = () => {
   const handleAddBalance = async () => {
     if (!/^\d{4,6}$/.test(pin)) {
       setStatusMessage("Invalid PIN. Must be 4-6 digits.");
-      setIsError(true);
+      setMessageType("error");
       return;
     }
 
+    setLoading(true);
     try {
-      const response = await axios.put(
+      await axios.put(
         `${BASE_URL}/account/update`,
         { amount: Number(amount), pin },
         { withCredentials: true }
       );
 
       setStatusMessage("Balance updated successfully!");
-      setIsError(false);
+      setMessageType("success");
       setAmount("");
       setPin("");
       setStep(1);
     } catch (err) {
       console.error("Balance update failed:", err);
 
-      setStatusMessage(
-        err.response?.data?.error || "Balance not updated! Please try again."
-      );
-      setIsError(true);
+      const errorMessage =
+        err.response?.data?.error ||
+        err.response?.data?.message ||
+        err.message ||
+        "Balance not updated! Please try again.";
+      setStatusMessage(errorMessage);
+      setMessageType("error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,23 +104,20 @@ const AddBalance = () => {
                 </div>
                 <Button
                   onClick={handleAddBalance}
-                  label="Confirm"
+                  label={loading ? "Processing..." : "Confirm"}
                   variant="primary"
                   fullWidth={true}
+                  disabled={loading}
                 />
               </>
             )}
 
             {statusMessage && (
-              <div
-                className={`p-3 rounded-button text-sm font-medium ${
-                  isError
-                    ? "text-red-700 bg-red-50 border border-red-200"
-                    : "text-accent-700 bg-accent-50 border border-accent-200"
-                }`}
-              >
-                {statusMessage}
-              </div>
+              <ErrorAlert
+                message={statusMessage}
+                type={messageType}
+                onClose={() => setStatusMessage("")}
+              />
             )}
 
             <div className="text-center">

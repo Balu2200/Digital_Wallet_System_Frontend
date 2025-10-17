@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ErrorAlert from "./ErrorAlert";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const [filter, setFilter] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const fetchLoggedInUser = async () => {
     try {
@@ -17,10 +20,19 @@ const Users = () => {
       fetchUsers(response.data._id, filter);
     } catch (error) {
       console.error("Error fetching logged-in user:", error);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Failed to fetch user data. Please try again.";
+      setError(errorMessage);
+      setLoading(false);
     }
   };
 
   const fetchUsers = async (userId, searchFilter) => {
+    setLoading(true);
+    setError("");
     try {
       const response = await axios.get(
         `${BASE_URL}/profile/bulk?filter=${searchFilter}`,
@@ -34,7 +46,15 @@ const Users = () => {
       setUsers(filteredUsers);
     } catch (error) {
       console.error("Error fetching users:", error);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Failed to load contacts. Please try again.";
+      setError(errorMessage);
       setUsers([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -75,14 +95,33 @@ const Users = () => {
         />
       </div>
 
+      {/* Error Alert */}
+      {error && (
+        <ErrorAlert
+          message={error}
+          type="error"
+          onClose={() => {
+            setError("");
+            fetchLoggedInUser();
+          }}
+        />
+      )}
+
+      {/* Loading State */}
+      {loading && !error && (
+        <div className="flex justify-center items-center py-16">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary-600 border-t-transparent"></div>
+        </div>
+      )}
+
       {/* Grid Layout for Contacts */}
-      {users.length > 0 ? (
+      {!loading && !error && users.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {users.map((user) => (
             <User key={user._id} user={user} />
           ))}
         </div>
-      ) : (
+      ) : !loading && !error ? (
         <div className="text-center py-16">
           <div className="w-20 h-20 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
@@ -104,7 +143,7 @@ const Users = () => {
             Try adjusting your search
           </p>
         </div>
-      )}
+      ) : null}
     </div>
   );
 };
